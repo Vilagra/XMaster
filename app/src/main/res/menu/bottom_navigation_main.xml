@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+            android:id="@+id/action_assets"
+            android:enabled="true"
+            android:icon="@drawable/ic_account_box_black_24dp"
+            android:title="@string/my_assets"
+            app:showAsAction="ifRoom" />
+    <item
+            android:id="@+id/action_market"
+            android:enabled="true"
+            android:icon="@drawable/ic_assessment_black_24dp"
+            android:title="@string/market"
+            app:showAsAction="ifRoom" />
+    <item
+            android:id="@+id/action_news"
+            android:enabled="true"
+            android:icon="@drawable/ic_assessment_black_24dp"
+            android:title="@string/news"
+            app:showAsAction="ifRoom" />
+</menu>
