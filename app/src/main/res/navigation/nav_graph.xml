@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/nav_graph"
+            app:startDestination="@+id/assetsFragment">
+    <fragment
+            android:id="@+id/marketFragment"
+            android:name="com.example.xmaster.market.MarketFragment"
+            android:label="Market Fragment"
+            tools:layout="@layout/market_fragment">
+        <action
+                android:id="@+id/action_from_market_to_assets"
+                app:destination="@id/assetsFragment" />
+        <action android:id="@+id/action_marketFragment_to_newsFragment" app:destination="@id/newsFragment"/>
+
+    </fragment>
+
+    <fragment
+            android:id="@+id/assetsFragment"
+            android:name="com.example.xmaster.assets.AssetsFragment"
+            android:label="Assets Fragment"
+            tools:layout="@layout/assets_fragment">
+        <action
+                android:id="@+id/action_from_aseets_to_market"
+                app:destination="@id/marketFragment" />
+        <action android:id="@+id/action_assetsFragment_to_newsFragment" app:destination="@id/newsFragment"/>
+    </fragment>
+
+    <fragment
+            android:id="@+id/newsFragment"
+            android:name="com.example.xmaster.news.NewsFragment"
+            android:label="News Fragment"
+            tools:layout="@layout/news_fragment">
+        <action android:id="@+id/action_newsFragment_to_marketFragment" app:destination="@id/marketFragment"/>
+        <action android:id="@+id/action_newsFragment_to_assetsFragment" app:destination="@+id/assetsFragment"/>
+    </fragment>
+</navigation>

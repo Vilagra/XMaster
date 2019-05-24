@@ -2,19 +2,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-            android:id="@+id/action_assets"
+            android:id="@+id/assetsFragment"
             android:enabled="true"
             android:icon="@drawable/ic_account_box_black_24dp"
             android:title="@string/my_assets"
             app:showAsAction="ifRoom" />
     <item
-            android:id="@+id/action_market"
+            android:id="@+id/marketFragment"
             android:enabled="true"
             android:icon="@drawable/ic_assessment_black_24dp"
             android:title="@string/market"
             app:showAsAction="ifRoom" />
     <item
-            android:id="@+id/action_news"
+            android:id="@+id/newsFragment"
             android:enabled="true"
             android:icon="@drawable/ic_assessment_black_24dp"
             android:title="@string/news"
