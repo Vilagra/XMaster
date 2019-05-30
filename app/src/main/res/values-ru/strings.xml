@@ -3,4 +3,5 @@
     <string name="my_assets">Мои активы</string>
     <string name="market">Рынок</string>
     <string name="news">Новости</string>
+    <string name="error">Ошибка</string>
 </resources>
