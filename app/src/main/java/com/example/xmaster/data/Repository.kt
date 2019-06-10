@@ -4,5 +4,5 @@ import androidx.lifecycle.LiveData
 
 interface Repository {
 
-    fun getAllCoins(): LiveData<List<Coin>>?
+    fun getAllCoins(): LiveData<ResultWrapper<List<Coin>>>?
 }

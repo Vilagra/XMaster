@@ -4,14 +4,23 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.paging.PagedList
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.example.xmaster.data.Coin
 import com.example.xmaster.data.Repository
+import com.example.xmaster.data.ResultWrapper
 
-class MarketViewModel(repository: Repository) : ViewModel() {
+class MarketViewModel(val repository: Repository) : ViewModel() {
 
-    private val mOnItemClickListener: ProjectsAdapter.OnItemClickListener
-    private val mIsLoading = MutableLiveData()
-    private val mIsErrorVisible = MutableLiveData()
-    private val mProjects: LiveData<PagedList<RichProject>>
-    private val mOnRefreshListener = SwipeRefreshLayout.OnRefreshListener({ this.updateProjects() })
+
+    private val mIsLoading = MutableLiveData<Boolean>()
+    private val mIsErrorVisible = MutableLiveData<Boolean>()
+    lateinit var mCoins: LiveData<ResultWrapper<PagedList<Coin>>>
+    private val mOnRefreshListener = this::updateCoins
+
+    init {
+        mCoins = repository.getAllCoins();
+    }
+
+    private fun updateCoins() {
+        repository.getAllCoins()
+    }
 }
