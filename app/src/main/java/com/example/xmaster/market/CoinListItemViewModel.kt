@@ -1,6 +1,6 @@
 package com.example.xmaster.market
 
-import com.example.xmaster.data.Coin
+import com.example.xmaster.data.model.Coin
 
 
 class CoinListItemViewModel(item: Coin) {

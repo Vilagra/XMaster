@@ -1,4 +1,4 @@
-package com.example.xmaster.data
+package com.example.xmaster.data.network
 
 import com.example.xmaster.BuildConfig
 import okhttp3.Interceptor

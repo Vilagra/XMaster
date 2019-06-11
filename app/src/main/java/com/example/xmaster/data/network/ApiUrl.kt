@@ -1,4 +1,4 @@
-package com.example.xmaster.data
+package com.example.xmaster.data.network
 
 const val BASE_URL = "sandbox-api.coinmarketcap.com"
 const val GET_ALL = "/v1/cryptocurrency/listings/latest"

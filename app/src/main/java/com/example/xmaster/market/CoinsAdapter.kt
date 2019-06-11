@@ -7,10 +7,10 @@ import androidx.annotation.NonNull
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.xmaster.data.Coin
+import com.example.xmaster.data.model.Coin
 import com.example.xmaster.databinding.CoinBinding
 
-class CoinsAdapter() :
+class CoinsAdapter(listener: OnItemClickListener) :
     PagedListAdapter<Coin, CoinsAdapter.CoinsHolder>(CALLBACK) {
 
     @NonNull
@@ -47,5 +47,10 @@ class CoinsAdapter() :
             mCoinBinding.setCoin(CoinListItemViewModel(item))
             mCoinBinding.executePendingBindings()
         }
+    }
+
+    interface OnItemClickListener {
+
+        fun onItemClick(username: String)
     }
 }

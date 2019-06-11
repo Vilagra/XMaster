@@ -1,4 +1,4 @@
-package com.example.xmaster.data
+package com.example.xmaster.data.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -13,4 +13,11 @@ data class Coin(
     val circulating_supply: Long,
     val percent_change_24h: Float){
 
+    override fun equals(other: Any?): Boolean {
+        return super.equals(other)
+    }
+
+    override fun hashCode(): Int {
+        return super.hashCode()
+    }
 }

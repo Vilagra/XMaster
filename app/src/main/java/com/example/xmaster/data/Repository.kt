@@ -1,8 +1,12 @@
 package com.example.xmaster.data
 
-import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
+import androidx.paging.PagedList
+import com.example.xmaster.data.model.Coin
 
 interface Repository {
 
-    fun getAllCoins(): LiveData<ResultWrapper<List<Coin>>>?
+    fun getAllCoinsFromDb(): MediatorLiveData<ResultWrapper<PagedList<Coin>>>
+
+    fun loadCoins(livedata: MediatorLiveData<ResultWrapper<PagedList<Coin>>>)
 }
