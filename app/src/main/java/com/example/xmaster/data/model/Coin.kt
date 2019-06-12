@@ -13,11 +13,19 @@ data class Coin(
     val circulating_supply: Float,
     val percent_change_24h: Float){
 
+
     override fun equals(other: Any?): Boolean {
-        return super.equals(other)
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as Coin
+
+        if (name != other.name) return false
+
+        return true
     }
 
     override fun hashCode(): Int {
-        return super.hashCode()
+        return name.hashCode()
     }
 }

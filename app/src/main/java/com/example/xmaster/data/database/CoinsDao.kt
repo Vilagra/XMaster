@@ -14,7 +14,7 @@ abstract class CoinsDao{
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract fun insertProjects(coins: List<Coin>)
 
-    @Query("select * from coin")
+    @Query("select * from coin order by cmc_rank")
     abstract fun getAllProjects(): DataSource.Factory<Int, Coin>
 
 }
