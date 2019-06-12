@@ -12,7 +12,7 @@ import com.example.xmaster.data.model.Coin
 abstract class CoinsDao{
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract fun insertProjects(coins: List<Coin>?)
+    abstract fun insertProjects(coins: List<Coin>)
 
     @Query("select * from coin")
     abstract fun getAllProjects(): DataSource.Factory<Int, Coin>

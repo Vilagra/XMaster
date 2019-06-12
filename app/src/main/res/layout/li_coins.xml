@@ -4,9 +4,6 @@
 
     <data class="CoinBinding">
 
-
-        <import type="java.lang.String"/>
-
         <variable
                 name="coin"
                 type="com.example.xmaster.market.CoinListItemViewModel"/>
@@ -18,7 +15,7 @@
             android:layout_height="wrap_content">
 
         <TextView
-                android:text="@{coin.cmc_rank}"
+                android:text="@{coin.cmc_rank + ``}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/textView"
@@ -54,7 +51,7 @@
                 android:layout_marginBottom="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"/>
         <TextView
-                android:text="@{String.valueOf(coin.price)}"
+                android:text="@{coin.price + ``}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/textView4"

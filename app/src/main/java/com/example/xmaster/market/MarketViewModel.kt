@@ -11,9 +11,7 @@ import com.example.xmaster.data.model.Coin
 class MarketViewModel(val repository: Repository) : ViewModel() {
 
     var mCoins: MediatorLiveData<ResultWrapper<PagedList<Coin>>>
-    get() = mCoins
-    var mOnRefreshListener = SwipeRefreshLayout.OnRefreshListener { updateCoins() }
-    get() = mOnRefreshListener
+    val mOnRefreshListener = SwipeRefreshLayout.OnRefreshListener { this.updateCoins() }
 
     init {
         mCoins = repository.getAllCoinsFromDb();

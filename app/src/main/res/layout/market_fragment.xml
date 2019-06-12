@@ -6,11 +6,11 @@
 
         <import
                 alias="V"
-                type="android.view.View" />
+                type="android.view.View"/>
 
         <variable
                 name="vm"
-                type="com.example.xmaster.market.MarketViewModel" />
+                type="com.example.xmaster.market.MarketViewModel"/>
 
     </data>
 
@@ -18,8 +18,9 @@
             android:id="@+id/refresher"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            bind:refreshState="@{vm.mCoins.status}"
             bind:onRefresh="@{vm.mOnRefreshListener}"
-            bind:refreshState="@{vm.mCoins.status}">
+    >
 
         <LinearLayout
                 android:layout_width="match_parent"
@@ -30,7 +31,7 @@
                     android:id="@+id/recycler"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    bind:data="@{vm.mCoins.data}" />
+                    bind:data="@{vm.mCoins.data}"/>
 
             <include
                     layout="@layout/v_error"/>

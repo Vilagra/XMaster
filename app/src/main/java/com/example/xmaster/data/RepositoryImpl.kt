@@ -43,7 +43,10 @@ class RepositoryImpl(val connectivityDispatcher: ConnectivityDispatcher, val app
         GlobalScope.launch{
             val result = RetrofitHelper.authService.getAll().execute()
             if(result.isSuccessful){
-               appDataBase.coinsDao().insertProjects(result.body())
+                result.body()?.coins?.let{
+                    appDataBase.coinsDao().insertProjects(it)
+                } ?: livedata.postValue(ResultWrapper.error(result.errorBody()?.string() ?:"coins==null", livedata.value?.data))
+
             }
             else {
                 livedata.postValue(ResultWrapper.error(result.errorBody()?.string() ?:"", livedata.value?.data))

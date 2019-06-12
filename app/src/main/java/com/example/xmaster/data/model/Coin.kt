@@ -5,12 +5,12 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class Coin(
-    @PrimaryKey(autoGenerate = true) var id: Long,
+    @PrimaryKey
     val name: String,
     val symbol: String,
     val cmc_rank: Int,
     val price: Float,
-    val circulating_supply: Long,
+    val circulating_supply: Float,
     val percent_change_24h: Float){
 
     override fun equals(other: Any?): Boolean {

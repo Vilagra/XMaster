@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.xmaster.data.model.Coin
 import com.example.xmaster.databinding.CoinBinding
 
-class CoinsAdapter(listener: OnItemClickListener) :
+class CoinsAdapter() :
     PagedListAdapter<Coin, CoinsAdapter.CoinsHolder>(CALLBACK) {
 
     @NonNull
