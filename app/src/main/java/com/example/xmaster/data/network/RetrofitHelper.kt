@@ -1,6 +1,9 @@
 package com.example.xmaster.data.network
 
 import com.example.xmaster.BuildConfig
+import com.example.xmaster.data.model.ImageDeserializer
+import com.example.xmaster.data.model.ImageResponse
+import com.google.gson.GsonBuilder
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -19,7 +22,10 @@ object RetrofitHelper {
 
         val builder = Retrofit.Builder()
             .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(
+                GsonBuilder()
+                    .registerTypeAdapter(ImageResponse::class.java, ImageDeserializer())
+                    .create()))
             .client(createClient())
 
         return builder.build()

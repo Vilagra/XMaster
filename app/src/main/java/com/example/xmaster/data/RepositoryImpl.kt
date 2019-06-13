@@ -30,26 +30,25 @@ class RepositoryImpl(val connectivityDispatcher: ConnectivityDispatcher, val app
         val dataFromDataBase = LivePagedListBuilder(appDataBase.coinsDao().getAllCoins(), 10).build();
         result.addSource(dataFromDataBase) {
             result.postValue(ResultWrapper.success(it))
-            loadPictures(it)
         }
         return result
     }
 
-    fun loadPictures(it: PagedList<Coin>) {
-        GlobalScope.launch {
-            val resList = ArrayList<Coin>()
-            for (coin in it) {
-                coin.imageURL ?: run {
-                    val result = RetrofitHelper.authService.getPicture(coin.name).execute()
-                    if(result.isSuccessful){
-                        result.body()?.image?.let {
-                            coin.imageURL = it
-                            resList.add(coin) }
+    fun loadPictures() {
+        val lictCoins = appDataBase.coinsDao().getAllCoinsList()
+        val resList = ArrayList<Coin>()
+        for (coin in lictCoins) {
+            coin.imageURL ?: run {
+                val result = RetrofitHelper.authService.getPicture(coin.name.toLowerCase()).execute()
+                if (result.isSuccessful) {
+                    result.body()?.image?.let {
+                        coin.imageURL = it
+                        resList.add(coin)
                     }
                 }
             }
-            appDataBase.coinsDao().update(resList)
         }
+        appDataBase.coinsDao().update(resList)
     }
 
     override fun loadCoins(livedata: MediatorLiveData<ResultWrapper<PagedList<Coin>>>) {
@@ -63,6 +62,7 @@ class RepositoryImpl(val connectivityDispatcher: ConnectivityDispatcher, val app
             if (result.isSuccessful) {
                 result.body()?.coins?.let {
                     appDataBase.coinsDao().insert(it)
+                    loadPictures()
                 } ?: livedata.postValue(
                     ResultWrapper.error(
                         result.errorBody()?.string() ?: "coins==null",

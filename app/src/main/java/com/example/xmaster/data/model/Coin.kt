@@ -1,7 +1,6 @@
 package com.example.xmaster.data.model
 
 import androidx.room.Entity
-import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 
 @Entity
@@ -34,6 +33,3 @@ class Coin(
     }
 }
 
-@Entity( foreignKeys = [ForeignKey(entity = Coin::class, parentColumns = ["name"], childColumns = ["name"])])
-class CoinPicture(val name: String,
-                  var imageURL: String)

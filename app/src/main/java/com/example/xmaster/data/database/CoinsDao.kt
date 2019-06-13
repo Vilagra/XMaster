@@ -14,7 +14,7 @@ abstract class CoinsDao{
     abstract fun insertCoins(coins: List<Coin>)
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    abstract fun insertCoin(coin: Coin):Int
+    abstract fun insertCoin(coin: Coin):Long
 
     @Query("SELECT count(*) FROM coin" )
     abstract fun count(): Int
@@ -34,6 +34,9 @@ abstract class CoinsDao{
     @Query("select * from coin order by cmc_rank")
     abstract fun getAllCoins(): DataSource.Factory<Int, Coin>
 
+    @Query("select * from coin order by cmc_rank")
+    abstract fun getAllCoinsList(): List<Coin>
+
     fun insert(coins: List<Coin>){
         val isTableEmpty = count() < 1
         if(isTableEmpty) {
@@ -42,7 +45,7 @@ abstract class CoinsDao{
         else{
             for (coin in coins) {
                 val id = insertCoin(coin)
-                if (id == -1) {
+                if (id == -1L) {
                     update(coin.name, coin.symbol, coin.cmc_rank, coin.price, coin.circulating_supply, coin.percent_change_24h)
                 }
             }

@@ -7,8 +7,11 @@ import androidx.annotation.NonNull
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.example.xmaster.R
 import com.example.xmaster.data.model.Coin
 import com.example.xmaster.databinding.CoinBinding
+import kotlinx.android.synthetic.main.li_coins.view.*
 
 class CoinsAdapter() :
     PagedListAdapter<Coin, CoinsAdapter.CoinsHolder>(CALLBACK) {
@@ -44,6 +47,14 @@ class CoinsAdapter() :
         RecyclerView.ViewHolder(mCoinBinding.getRoot()) {
 
         fun bind(item: Coin) {
+            val url = item.imageURL?.apply { "$this?w360" } ?: null
+            Glide.with(itemView)
+                    .load(url)
+                    .centerCrop()
+                    .placeholder(R.drawable.ic_image_place_holder)
+                    .error(R.drawable.ic_broken_image)
+                    .fallback(R.drawable.ic_no_image)
+                    .into(itemView.picture)
             mCoinBinding.setCoin(CoinListItemViewModel(item))
             mCoinBinding.executePendingBindings()
         }
