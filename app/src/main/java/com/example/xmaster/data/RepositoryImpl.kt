@@ -27,29 +27,51 @@ class RepositoryImpl(val connectivityDispatcher: ConnectivityDispatcher, val app
 
     override fun getAllCoinsFromDb(): MediatorLiveData<ResultWrapper<PagedList<Coin>>> {
         val result = MediatorLiveData<ResultWrapper<PagedList<Coin>>>()
-        val dataFromDataBase = LivePagedListBuilder(appDataBase.coinsDao().getAllProjects(), 10).build();
-        result.addSource(dataFromDataBase){
+        val dataFromDataBase = LivePagedListBuilder(appDataBase.coinsDao().getAllCoins(), 10).build();
+        result.addSource(dataFromDataBase) {
             result.postValue(ResultWrapper.success(it))
+            loadPictures(it)
         }
         return result
     }
 
+    fun loadPictures(it: PagedList<Coin>) {
+        GlobalScope.launch {
+            val resList = ArrayList<Coin>()
+            for (coin in it) {
+                coin.imageURL ?: run {
+                    val result = RetrofitHelper.authService.getPicture(coin.name).execute()
+                    if(result.isSuccessful){
+                        result.body()?.image?.let {
+                            coin.imageURL = it
+                            resList.add(coin) }
+                    }
+                }
+            }
+            appDataBase.coinsDao().update(resList)
+        }
+    }
+
     override fun loadCoins(livedata: MediatorLiveData<ResultWrapper<PagedList<Coin>>>) {
         livedata.postValue(ResultWrapper.loading(livedata.value?.data))
-        if(!connectivityDispatcher.hasConnection()){
+        if (!connectivityDispatcher.hasConnection()) {
             livedata.postValue(ResultWrapper.error("Отсуствует интернет соединение!", livedata.value?.data))
             return
         }
-        GlobalScope.launch{
+        GlobalScope.launch {
             val result = RetrofitHelper.authService.getAll().execute()
-            if(result.isSuccessful){
-                result.body()?.coins?.let{
-                    appDataBase.coinsDao().insertProjects(it)
-                } ?: livedata.postValue(ResultWrapper.error(result.errorBody()?.string() ?:"coins==null", livedata.value?.data))
+            if (result.isSuccessful) {
+                result.body()?.coins?.let {
+                    appDataBase.coinsDao().insert(it)
+                } ?: livedata.postValue(
+                    ResultWrapper.error(
+                        result.errorBody()?.string() ?: "coins==null",
+                        livedata.value?.data
+                    )
+                )
 
-            }
-            else {
-                livedata.postValue(ResultWrapper.error(result.errorBody()?.string() ?:"", livedata.value?.data))
+            } else {
+                livedata.postValue(ResultWrapper.error(result.errorBody()?.string() ?: "", livedata.value?.data))
             }
         }
 

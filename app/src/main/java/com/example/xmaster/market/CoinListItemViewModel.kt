@@ -8,9 +8,9 @@ class CoinListItemViewModel(item: Coin) {
     val name: String
     val symbol: String
     val cmc_rank: Int
-    val price: Float
-    val circulating_supply: Float
-    val percent_change_24h: Float
+    val price: Double
+    val circulating_supply: Double
+    val percent_change_24h: Double
 
     init {
        name = item.name

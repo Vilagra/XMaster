@@ -1,20 +1,24 @@
 package com.example.xmaster.data.model
 
 import androidx.room.Entity
+import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 
 @Entity
-data class Coin(
+class Coin(
     @PrimaryKey
     val name: String,
     val symbol: String,
     val cmc_rank: Int,
-    val price: Float,
-    val circulating_supply: Float,
-    val percent_change_24h: Float){
+    val price: Double,
+    val circulating_supply: Double,
+    val percent_change_24h: Double,
+    var imageURL: String? = null){
 
 
     override fun equals(other: Any?): Boolean {
+
+        circulating_supply.toLong()
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
@@ -29,3 +33,7 @@ data class Coin(
         return name.hashCode()
     }
 }
+
+@Entity( foreignKeys = [ForeignKey(entity = Coin::class, parentColumns = ["name"], childColumns = ["name"])])
+class CoinPicture(val name: String,
+                  var imageURL: String)

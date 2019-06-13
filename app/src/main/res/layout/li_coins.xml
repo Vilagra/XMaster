@@ -27,6 +27,15 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_marginBottom="8dp"/>
+
+        <ImageView
+                android:id="@+id/picture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/textView"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
         <TextView
                 android:text="@{coin.name + `(` + coin.symbol + `)`}"
                 android:layout_width="wrap_content"
@@ -34,12 +43,12 @@
                 android:id="@+id/textView2"
                 android:textStyle="bold"
                 android:textColor="@color/black"
-                app:layout_constraintStart_toEndOf="@+id/textView"
+                app:layout_constraintStart_toEndOf="@+id/picture"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 app:layout_constraintTop_toTopOf="parent"/>
         <TextView
-                android:text="@{`Suply ` + coin.circulating_supply}"
+                android:text="@{`Suply: ` + Math.round(coin.circulating_supply)}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textStyle="italic"
