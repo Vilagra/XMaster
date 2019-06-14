@@ -13,11 +13,21 @@ class CoinListItemViewModel(item: Coin) {
     val percent_change_24h: Double
 
     init {
-       name = item.name
+       name = adaptName(item.name)
         symbol = item.symbol
         cmc_rank = item.cmc_rank
         price = item.price
         circulating_supply = item.circulating_supply
         percent_change_24h = item.percent_change_24h
+    }
+
+    fun adaptName(name: String):String{
+        when(name) {
+            "Bitcoin" -> return "Батя"
+            "Ethereum" -> return "Izotium"
+            "Bitcoin Cash" -> return "Olegka cash"
+            "EOS" -> return "proEbOS"
+             else -> return name
+        }
     }
 }
