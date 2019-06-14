@@ -1,6 +1,8 @@
 package com.example.xmaster.data.network
 
 import com.example.xmaster.BuildConfig
+import com.example.xmaster.data.model.Coin
+import com.example.xmaster.data.model.CoinDeserializer
 import com.example.xmaster.data.model.ImageDeserializer
 import com.example.xmaster.data.model.ImagesResponse
 import com.google.gson.GsonBuilder
@@ -25,6 +27,7 @@ object RetrofitHelper {
             .addConverterFactory(GsonConverterFactory.create(
                 GsonBuilder()
                     .registerTypeAdapter(ImagesResponse::class.java, ImageDeserializer())
+                    .registerTypeAdapter(Coin::class.java, CoinDeserializer())
                     .create()))
             .client(createClient())
 
