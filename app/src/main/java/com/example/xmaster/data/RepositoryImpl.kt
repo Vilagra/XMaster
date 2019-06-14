@@ -35,20 +35,16 @@ class RepositoryImpl(val connectivityDispatcher: ConnectivityDispatcher, val app
     }
 
     fun loadPictures() {
-        val lictCoins = appDataBase.coinsDao().getAllCoinsList()
-        val resList = ArrayList<Coin>()
-        for (coin in lictCoins) {
-            coin.imageURL ?: run {
-                val result = RetrofitHelper.authService.getPicture(coin.name.toLowerCase()).execute()
-                if (result.isSuccessful) {
-                    result.body()?.image?.let {
-                        coin.imageURL = it
-                        resList.add(coin)
-                    }
-                }
+        val lictCoins = appDataBase.coinsDao().getAllCoinsList().toSet()
+        val coinsWithoutPicture = lictCoins.filter { it.imageURL == null }
+        for (lictCoin in coinsWithoutPicture.chunked(500)) {
+            val coinsWithoutPictureIDsString = lictCoin.map { it.id }.joinToString(separator = ",")
+            val result = RetrofitHelper.authService.getPicture(coinsWithoutPictureIDsString).execute()
+            if(result.isSuccessful){
+                result.body()?.res?.forEach { images -> coinsWithoutPicture.find { coin -> coin.id.toInt() === images.id.toInt() }?.imageURL = images.logo }
             }
         }
-        appDataBase.coinsDao().update(resList)
+        appDataBase.coinsDao().update(coinsWithoutPicture)
     }
 
     override fun loadCoins(livedata: MediatorLiveData<ResultWrapper<PagedList<Coin>>>) {

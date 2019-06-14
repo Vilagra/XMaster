@@ -6,6 +6,7 @@ import androidx.room.PrimaryKey
 @Entity
 class Coin(
     @PrimaryKey
+    val id: Long,
     val name: String,
     val symbol: String,
     val cmc_rank: Int,
@@ -14,22 +15,19 @@ class Coin(
     val percent_change_24h: Double,
     var imageURL: String? = null){
 
-
     override fun equals(other: Any?): Boolean {
-
-        circulating_supply.toLong()
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
         other as Coin
 
-        if (name != other.name) return false
+        if (id != other.id) return false
 
         return true
     }
 
     override fun hashCode(): Int {
-        return name.hashCode()
+        return id.hashCode()
     }
 }
 

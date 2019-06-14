@@ -1,7 +1,7 @@
 package com.example.xmaster.data.network
 
 import com.example.xmaster.data.model.CoinResponse
-import com.example.xmaster.data.model.ImageResponse
+import com.example.xmaster.data.model.ImagesResponse
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -14,6 +14,6 @@ interface ApiService {
                @Query("convert") convert: String = "USD"): Call<CoinResponse>
 
     @GET(GET_PICTURE)
-    fun getPicture(@Query("slug") name: String): Call<ImageResponse>
+    fun getPicture(@Query("id") name: String): Call<ImagesResponse>
 
 }
