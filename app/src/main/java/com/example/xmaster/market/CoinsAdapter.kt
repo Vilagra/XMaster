@@ -24,10 +24,7 @@ class CoinsAdapter() :
     }
 
     override fun onBindViewHolder(@NonNull holder: CoinsHolder, position: Int) {
-        val project = getItem(position)
-        if (project != null) {
-            holder.bind(project)
-        }
+        getItem(position)?.run { holder.bind(this) }
     }
 
     companion object {

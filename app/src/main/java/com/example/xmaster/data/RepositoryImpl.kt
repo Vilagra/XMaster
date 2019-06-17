@@ -65,7 +65,6 @@ class RepositoryImpl(val connectivityDispatcher: ConnectivityDispatcher, val app
                         livedata.value?.data
                     )
                 )
-
             } else {
                 livedata.postValue(ResultWrapper.error(result.errorBody()?.string() ?: "", livedata.value?.data))
             }

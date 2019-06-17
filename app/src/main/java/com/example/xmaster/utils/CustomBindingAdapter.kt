@@ -2,6 +2,7 @@ package com.example.xmaster.utils
 
 import androidx.databinding.BindingAdapter
 import androidx.paging.PagedList
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -20,7 +21,11 @@ object CustomBindingAdapter {
     ) {
         val adapter = CoinsAdapter()
         adapter.submitList(coins)
+        var manager = LinearLayoutManager(recyclerView.context)
         recyclerView.layoutManager = LinearLayoutManager(recyclerView.context) as RecyclerView.LayoutManager?
+        var dividerItemDecoration = DividerItemDecoration(recyclerView.getContext(),
+            manager.orientation);
+        recyclerView.addItemDecoration(dividerItemDecoration)
         recyclerView.adapter = adapter
     }
 

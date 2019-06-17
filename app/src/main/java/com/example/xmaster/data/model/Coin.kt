@@ -38,13 +38,13 @@ class Coin(
 class CoinDeserializer : JsonDeserializer<Coin> {
     override fun deserialize(json: JsonElement?, typeOfT: Type?, context: JsonDeserializationContext?): Coin {
         val jsonObject = json?.asJsonObject
-        val id = jsonObject?.getAsJsonPrimitive("id")!!.asLong
-        val name = jsonObject?.getAsJsonPrimitive("name")!!.asString
-        val symbol= jsonObject?.getAsJsonPrimitive("symbol")!!.asString
-        val cmc_rank =jsonObject?.getAsJsonPrimitive("cmc_rank")!!.asInt
-        val price = jsonObject?.getAsJsonObject("quote")?.getAsJsonObject("USD")?.getAsJsonPrimitive("price")!!.asDouble
-        val circulating_supply =jsonObject?.getAsJsonPrimitive("circulating_supply")!!.asDouble
-        val percent_change_24h = jsonObject?.getAsJsonObject("quote")?.getAsJsonObject("USD")?.getAsJsonPrimitive("percent_change_24h")!!.asDouble
+        val id = jsonObject?.getAsJsonPrimitive("id")?.asLong ?: 0
+        val name = jsonObject?.getAsJsonPrimitive("name")?.asString ?: ""
+        val symbol= jsonObject?.getAsJsonPrimitive("symbol")?.asString ?: ""
+        val cmc_rank =jsonObject?.getAsJsonPrimitive("cmc_rank")?.asInt ?: -1
+        val price = jsonObject?.getAsJsonObject("quote")?.getAsJsonObject("USD")?.getAsJsonPrimitive("price")?.asDouble ?: 0.0
+        val circulating_supply =jsonObject?.get("circulating_supply")?.let { if(it.isJsonNull) 0.0 else it?.asDouble} ?: 0.0
+        val percent_change_24h = jsonObject?.getAsJsonObject("quote")?.getAsJsonObject("USD")?.get("percent_change_24h")?.asDouble ?: 0.0
         return Coin(id, name, symbol, cmc_rank, price, circulating_supply, percent_change_24h)
     }
 
