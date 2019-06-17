@@ -22,11 +22,12 @@ object CustomBindingAdapter {
         val adapter = CoinsAdapter()
         adapter.submitList(coins)
         var manager = LinearLayoutManager(recyclerView.context)
-        recyclerView.layoutManager = LinearLayoutManager(recyclerView.context) as RecyclerView.LayoutManager?
-        var dividerItemDecoration = DividerItemDecoration(recyclerView.getContext(),
-            manager.orientation);
-        recyclerView.addItemDecoration(dividerItemDecoration)
+        recyclerView.layoutManager = manager
         recyclerView.adapter = adapter
+        if (recyclerView.itemDecorationCount < 1) {
+            var dividerItemDecoration = DividerItemDecoration(recyclerView.getContext(), manager.orientation);
+            recyclerView.addItemDecoration(dividerItemDecoration)
+        }
     }
 
     @BindingAdapter("bind:refreshState", "bind:onRefresh")
@@ -40,14 +41,14 @@ object CustomBindingAdapter {
         layout.post { layout.isRefreshing = status == Status.LOADING }
     }
 
- /*   @BindingAdapter("bind:onRefresh")
-    @JvmStatic
-    fun configureSwipeRefreshLayout(
-        layout: SwipeRefreshLayout,
-        listener: SwipeRefreshLayout.OnRefreshListener
-    ) {
-        layout.setOnRefreshListener(listener)
-    }*/
+    /*   @BindingAdapter("bind:onRefresh")
+       @JvmStatic
+       fun configureSwipeRefreshLayout(
+           layout: SwipeRefreshLayout,
+           listener: SwipeRefreshLayout.OnRefreshListener
+       ) {
+           layout.setOnRefreshListener(listener)
+       }*/
 
 
 }
