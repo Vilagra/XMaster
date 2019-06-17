@@ -17,6 +17,7 @@ class Coin(
     val price: Double,
     val circulating_supply: Double,
     val percent_change_24h: Double,
+    val market_cap: Double,
     var imageURL: String? = null){
 
     override fun equals(other: Any?): Boolean {
@@ -45,7 +46,8 @@ class CoinDeserializer : JsonDeserializer<Coin> {
         val price = jsonObject?.getAsJsonObject("quote")?.getAsJsonObject("USD")?.getAsJsonPrimitive("price")?.asDouble ?: 0.0
         val circulating_supply =jsonObject?.get("circulating_supply")?.let { if(it.isJsonNull) 0.0 else it?.asDouble} ?: 0.0
         val percent_change_24h = jsonObject?.getAsJsonObject("quote")?.getAsJsonObject("USD")?.get("percent_change_24h")?.asDouble ?: 0.0
-        return Coin(id, name, symbol, cmc_rank, price, circulating_supply, percent_change_24h)
+        val market_cap = jsonObject?.getAsJsonObject("quote")?.getAsJsonObject("USD")?.get("market_cap")?.let { if(it.isJsonNull) 0.0 else it?.asDouble} ?: 0.0
+        return Coin(id, name, symbol, cmc_rank, price, circulating_supply, percent_change_24h, market_cap)
     }
 
 }

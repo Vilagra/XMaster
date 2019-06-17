@@ -14,7 +14,7 @@ class RepositoryFactory {
                 as ConnectivityManager
             val connectivityStatus = ConnectivityDispatcher.getInstance(connectivityManager)
             val appDataBase: AppDataBase = Room.databaseBuilder(context, AppDataBase::class.java, "database-app").fallbackToDestructiveMigration().build()
-            return RepositoryImpl.getInstance(connectivityStatus, appDataBase)
+            return RepositoryImpl.getInstance(connectivityStatus, appDataBase, context)
         }
     }
 }

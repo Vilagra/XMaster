@@ -1,8 +1,10 @@
 package com.example.xmaster.data
 
+import android.content.Context
 import androidx.lifecycle.MediatorLiveData
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
+import com.bumptech.glide.Glide
 import com.example.xmaster.data.database.AppDataBase
 import com.example.xmaster.data.model.Coin
 import com.example.xmaster.data.network.ConnectivityDispatcher
@@ -10,19 +12,19 @@ import com.example.xmaster.data.network.RetrofitHelper
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class RepositoryImpl(val connectivityDispatcher: ConnectivityDispatcher, val appDataBase: AppDataBase) : Repository {
+class RepositoryImpl(val connectivityDispatcher: ConnectivityDispatcher, val appDataBase: AppDataBase, val context: Context) : Repository {
 
     companion object {
         @Volatile
         private var INSTANCE: RepositoryImpl? = null
 
-        fun getInstance(connectivityDispatcher: ConnectivityDispatcher, appDataBase: AppDataBase): RepositoryImpl =
+        fun getInstance(connectivityDispatcher: ConnectivityDispatcher, appDataBase: AppDataBase, context: Context): RepositoryImpl =
             INSTANCE ?: synchronized(this) {
-                INSTANCE ?: init(connectivityDispatcher, appDataBase).also { INSTANCE = it }
+                INSTANCE ?: init(connectivityDispatcher, appDataBase, context).also { INSTANCE = it }
             }
 
-        private fun init(connectivityDispatcher: ConnectivityDispatcher, appDataBase: AppDataBase) =
-            RepositoryImpl(connectivityDispatcher, appDataBase)
+        private fun init(connectivityDispatcher: ConnectivityDispatcher, appDataBase: AppDataBase, context: Context) =
+            RepositoryImpl(connectivityDispatcher, appDataBase, context)
     }
 
     override fun getAllCoinsFromDb(): MediatorLiveData<ResultWrapper<PagedList<Coin>>> {
@@ -41,7 +43,10 @@ class RepositoryImpl(val connectivityDispatcher: ConnectivityDispatcher, val app
             val coinsWithoutPictureIDsString = lictCoin.map { it.id }.joinToString(separator = ",")
             val result = RetrofitHelper.authService.getPicture(coinsWithoutPictureIDsString).execute()
             if(result.isSuccessful){
-                result.body()?.res?.forEach { images -> coinsWithoutPicture.find { coin -> coin.id.toInt() === images.id.toInt() }?.imageURL = images.logo }
+                result.body()?.res?.forEach { images -> coinsWithoutPicture.find { coin -> coin.id.toInt() === images.id.toInt() }?.imageURL = images.logo;
+                    Glide.with(context)
+                        .load(images.logo)
+                        .preload(500, 500)}
             }
         }
         appDataBase.coinsDao().update(coinsWithoutPicture)

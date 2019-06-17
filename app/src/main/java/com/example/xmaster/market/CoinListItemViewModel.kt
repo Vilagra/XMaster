@@ -1,8 +1,7 @@
 package com.example.xmaster.market
 
 import com.example.xmaster.data.model.Coin
-import java.math.RoundingMode
-import java.text.DecimalFormat
+import com.example.xmaster.utils.NumberConverter
 
 
 class CoinListItemViewModel(item: Coin) {
@@ -10,19 +9,20 @@ class CoinListItemViewModel(item: Coin) {
     val name: String
     val symbol: String
     val cmc_rank: Int
-    val price: Double
-    val circulating_supply: Double
+    val price: String
+    val circulating_supply: String
     val percent_change_24h: Double
+    val market_cap: String
+
 
     init {
-        val df = DecimalFormat("#.##")
-        df.roundingMode = RoundingMode.CEILING
         name = adaptName(item.name)
         symbol = item.symbol
         cmc_rank = item.cmc_rank
-        price = df.format(item.price).toDouble()
-        circulating_supply = item.circulating_supply
-        percent_change_24h = df.format(item.percent_change_24h).toDouble()
+        price = NumberConverter.doubleWithTwoPointAfterComa(item.price).toString()
+        circulating_supply = NumberConverter.convertDigitOnTouthandsComaSeparator(item.circulating_supply)
+        percent_change_24h = NumberConverter.doubleWithTwoPointAfterComa(item.percent_change_24h)
+        market_cap = NumberConverter.convertDigitOnTouthandsComaSeparator(NumberConverter.doubleWithTwoPointAfterComa(item.market_cap))
     }
 
     fun adaptName(name: String): String {
