@@ -37,7 +37,8 @@ abstract class CoinsDao{
     @Query("select * from coin order by cmc_rank")
     abstract fun getAllCoinsList(): List<Coin>
 
-    fun insert(coins: List<Coin>){
+    @Transaction
+    open suspend fun insert(coins: List<Coin>){
         val isTableEmpty = count() < 1
         if(isTableEmpty) {
             insertCoins(coins)
