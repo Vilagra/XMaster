@@ -40,15 +40,4 @@ object CustomBindingAdapter {
         layout.setOnRefreshListener(listener)
         layout.post { layout.isRefreshing = status == Status.LOADING }
     }
-
-    /*   @BindingAdapter("bind:onRefresh")
-       @JvmStatic
-       fun configureSwipeRefreshLayout(
-           layout: SwipeRefreshLayout,
-           listener: SwipeRefreshLayout.OnRefreshListener
-       ) {
-           layout.setOnRefreshListener(listener)
-       }*/
-
-
 }

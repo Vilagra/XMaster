@@ -12,8 +12,15 @@ object NumberConverter{
         df.roundingMode = RoundingMode.CEILING
         return df.format(double)
     }
+
     fun doubleWithTwoPointAfterComa (double: Double): Double {
         val df = DecimalFormat("#.##")
+        df.roundingMode = RoundingMode.CEILING
+        return df.format(double).toDouble()
+    }
+
+    fun doubleWithThreePointAfterComa (double: Double): Double {
+        val df = DecimalFormat("#.###")
         df.roundingMode = RoundingMode.CEILING
         return df.format(double).toDouble()
     }

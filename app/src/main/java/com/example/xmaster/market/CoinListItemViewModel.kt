@@ -19,7 +19,7 @@ class CoinListItemViewModel(item: Coin) {
         name = adaptName(item.name)
         symbol = item.symbol
         cmc_rank = item.cmc_rank
-        price = NumberConverter.doubleWithTwoPointAfterComa(item.price).toString()
+        price = NumberConverter.doubleWithThreePointAfterComa(item.price).toString()
         circulating_supply = NumberConverter.convertDigitOnTouthandsComaSeparator(item.circulating_supply)
         percent_change_24h = NumberConverter.doubleWithTwoPointAfterComa(item.percent_change_24h)
         market_cap = NumberConverter.convertDigitOnTouthandsComaSeparator(NumberConverter.doubleWithTwoPointAfterComa(item.market_cap))
