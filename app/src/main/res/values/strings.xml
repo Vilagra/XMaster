@@ -4,4 +4,6 @@
     <string name="market">Market</string>
     <string name="news">news</string>
     <string name="error">error</string>
+    <string name="lost_internet">internet is off</string>
+    <string name="server_problem">server trouble</string>
 </resources>

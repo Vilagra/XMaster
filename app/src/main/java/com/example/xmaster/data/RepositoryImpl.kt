@@ -9,6 +9,7 @@ import com.example.xmaster.data.database.AppDataBase
 import com.example.xmaster.data.model.Coin
 import com.example.xmaster.data.network.ConnectivityDispatcher
 import com.example.xmaster.data.network.RetrofitHelper
+import com.example.xmaster.utils.Constants
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -55,12 +56,12 @@ class RepositoryImpl(val connectivityDispatcher: ConnectivityDispatcher, val app
     override fun loadCoins(livedata: MediatorLiveData<ResultWrapper<PagedList<Coin>>>) {
         livedata.postValue(ResultWrapper.loading(livedata.value?.data))
         if (!connectivityDispatcher.hasConnection()) {
-            livedata.postValue(ResultWrapper.error("Отсуствует интернет соединение!", livedata.value?.data))
+            livedata.postValue(ResultWrapper.error(Constants.LOST_INTERNET_CONNECTION, livedata.value?.data))
             return
         }
         GlobalScope.launch {
             val result = RetrofitHelper.authService.getAll().execute()
-            if (result.isSuccessful) {
+            if (false) {
                 result.body()?.coins?.let {
                     appDataBase.coinsDao().insert(it)
                     loadPictures()
@@ -71,7 +72,7 @@ class RepositoryImpl(val connectivityDispatcher: ConnectivityDispatcher, val app
                     )
                 )
             } else {
-                livedata.postValue(ResultWrapper.error(result.errorBody()?.string() ?: "", livedata.value?.data))
+                livedata.postValue(ResultWrapper.error(Constants.SERVER_PROBLEM ?: "", livedata.value?.data))
             }
         }
 
