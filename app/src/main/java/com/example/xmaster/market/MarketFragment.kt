@@ -28,7 +28,7 @@ class MarketFragment : Fragment() {
         val factory = CustomFactory(repo)
         mMarketViewModel = ViewModelProviders.of(this, factory).get(MarketViewModel::class.java)
         mMarketViewModel?.toastMessages?.observe(this, Observer { res ->
-            if (res != null) {
+            if (res != null && res != -1) {
                 val message = getString(res)
                 Toast.makeText(context, message, Toast.LENGTH_LONG).show()
             }

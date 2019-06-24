@@ -61,7 +61,7 @@ class RepositoryImpl(val connectivityDispatcher: ConnectivityDispatcher, val app
         }
         GlobalScope.launch {
             val result = RetrofitHelper.authService.getAll().execute()
-            if (false) {
+            if (result.isSuccessful) {
                 result.body()?.coins?.let {
                     appDataBase.coinsDao().insert(it)
                     loadPictures()
