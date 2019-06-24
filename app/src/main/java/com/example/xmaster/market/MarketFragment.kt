@@ -15,6 +15,8 @@ import com.example.xmaster.utils.CustomFactory
 
 class MarketFragment : Fragment() {
 
+    lateinit var binding: MarketFragmentBinding
+
     companion object {
         fun newInstance() = MarketFragment()
     }
@@ -27,20 +29,23 @@ class MarketFragment : Fragment() {
         val repo = RepositoryFactory.provideRepository(context)
         val factory = CustomFactory(repo)
         mMarketViewModel = ViewModelProviders.of(this, factory).get(MarketViewModel::class.java)
-        mMarketViewModel?.toastMessages?.observe(this, Observer { res ->
+
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        binding = MarketFragmentBinding.inflate(inflater, container, false)
+        return binding.getRoot()
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        binding.setVm(mMarketViewModel)
+        binding.setLifecycleOwner(viewLifecycleOwner)
+        mMarketViewModel?.toastMessages?.observe(viewLifecycleOwner, Observer { res ->
             if (res != null && res != -1) {
                 val message = getString(res)
                 Toast.makeText(context, message, Toast.LENGTH_LONG).show()
             }
         })
-
     }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val binding = MarketFragmentBinding.inflate(inflater, container, false)
-        binding.setVm(mMarketViewModel)
-        binding.setLifecycleOwner(this)
-        return binding.getRoot()
-    }
-
 }
