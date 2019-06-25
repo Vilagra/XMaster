@@ -9,9 +9,10 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.example.xmaster.data.RepositoryFactory
+import com.example.xmaster.MyApplication
 import com.example.xmaster.databinding.MarketFragmentBinding
 import com.example.xmaster.utils.CustomFactory
+import javax.inject.Inject
 
 class MarketFragment : Fragment() {
 
@@ -24,10 +25,13 @@ class MarketFragment : Fragment() {
     private var mMarketViewModel: MarketViewModel? = null
 
 
+    @Inject
+    lateinit var factory: CustomFactory
+
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        val repo = RepositoryFactory.provideRepository(context)
-        val factory = CustomFactory(repo)
+        (activity?.application as MyApplication).component.inject(this)
         mMarketViewModel = ViewModelProviders.of(this, factory).get(MarketViewModel::class.java)
 
     }

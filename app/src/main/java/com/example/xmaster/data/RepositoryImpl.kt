@@ -12,8 +12,10 @@ import com.example.xmaster.data.network.RetrofitHelper
 import com.example.xmaster.utils.Constants
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class RepositoryImpl(val connectivityDispatcher: ConnectivityDispatcher, val appDataBase: AppDataBase, val context: Context) : Repository {
+
+class RepositoryImpl @Inject constructor(val connectivityDispatcher: ConnectivityDispatcher, val appDataBase: AppDataBase, val context: Context) : Repository {
 
     companion object {
         @Volatile
