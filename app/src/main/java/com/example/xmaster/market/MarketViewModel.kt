@@ -1,7 +1,6 @@
 package com.example.xmaster.market
 
 import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.paging.PagedList
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -21,8 +20,8 @@ class MarketViewModel(val repository: Repository) : ViewModel() {
 
     init {
         mCoins = repository.getAllCoinsFromDb();
-        mCoins.observeForever(Observer { val res = convertToErrorResource(it)
-        toastMessages.postValue(res)})
+        toastMessages.addSource(mCoins){wrapper ->
+            toastMessages.postValue(convertToErrorResource(wrapper))}
     }
 
     private fun updateCoins() {
