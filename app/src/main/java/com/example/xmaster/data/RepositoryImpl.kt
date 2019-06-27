@@ -12,23 +12,10 @@ import com.example.xmaster.data.network.RetrofitHelper
 import com.example.xmaster.utils.Constants
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 
-class RepositoryImpl @Inject constructor(val connectivityDispatcher: ConnectivityDispatcher, val appDataBase: AppDataBase, val context: Context) : Repository {
+class RepositoryImpl constructor(val connectivityDispatcher: ConnectivityDispatcher, val appDataBase: AppDataBase, val context: Context) : Repository {
 
-    companion object {
-        @Volatile
-        private var INSTANCE: RepositoryImpl? = null
-
-        fun getInstance(connectivityDispatcher: ConnectivityDispatcher, appDataBase: AppDataBase, context: Context): RepositoryImpl =
-            INSTANCE ?: synchronized(this) {
-                INSTANCE ?: init(connectivityDispatcher, appDataBase, context).also { INSTANCE = it }
-            }
-
-        private fun init(connectivityDispatcher: ConnectivityDispatcher, appDataBase: AppDataBase, context: Context) =
-            RepositoryImpl(connectivityDispatcher, appDataBase, context)
-    }
 
     override fun getAllCoinsFromDb(): MediatorLiveData<ResultWrapper<PagedList<Coin>>> {
         val result = MediatorLiveData<ResultWrapper<PagedList<Coin>>>()
