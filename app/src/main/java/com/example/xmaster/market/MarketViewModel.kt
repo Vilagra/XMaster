@@ -1,5 +1,6 @@
 package com.example.xmaster.market
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
 import androidx.paging.PagedList
@@ -14,18 +15,22 @@ import com.example.xmaster.utils.SingleLiveEvent
 
 class MarketViewModel(val repository: Repository) : ViewModel() {
 
-    val mCoins: MediatorLiveData<ResultWrapper<PagedList<Coin>>>
-    internal val toastMessages: SingleLiveEvent<Int> = SingleLiveEvent()
+    private val _mCoins: MediatorLiveData<ResultWrapper<PagedList<Coin>>>
+    val mCoins: LiveData<ResultWrapper<PagedList<Coin>>>
+    get() = _mCoins
+    private val _toastMessages: SingleLiveEvent<Int> = SingleLiveEvent()
+    val toastMessages: SingleLiveEvent<Int>
+        get() = _toastMessages
     val mOnRefreshListener = SwipeRefreshLayout.OnRefreshListener { this.updateCoins() }
 
     init {
-        mCoins = repository.getAllCoinsFromDb();
-        toastMessages.addSource(mCoins){wrapper ->
-            toastMessages.postValue(convertToErrorResource(wrapper))}
+        _mCoins = repository.getAllCoinsFromDb();
+        _toastMessages.addSource(_mCoins){ wrapper ->
+            _toastMessages.postValue(convertToErrorResource(wrapper))}
     }
 
     private fun updateCoins() {
-        repository.loadCoins(mCoins)
+        repository.loadCoins(_mCoins)
     }
 
     fun convertToErrorResource(data: ResultWrapper<PagedList<Coin>>): Int{
