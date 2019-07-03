@@ -1,8 +1,6 @@
 package com.example.xmaster.market
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import androidx.paging.PagedList
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.xmaster.R
@@ -22,18 +20,25 @@ class MarketViewModel(val repository: Repository) : ViewModel() {
     val toastMessages: SingleLiveEvent<Int>
         get() = _toastMessages
     val mOnRefreshListener = SwipeRefreshLayout.OnRefreshListener { this.updateCoins() }
+    val uploadCoins: MutableLiveData<Unit> = MutableLiveData()
+    private val _loadCoinsRequest: LiveData<ResultWrapper<Unit>> = Transformations.switchMap(uploadCoins){res-> repository.loadCoins()}
+    val mLoad: LiveData<ResultWrapper<Unit>>
+        get() = _loadCoinsRequest
+
+
+
 
     init {
         _mCoins = repository.getAllCoinsFromDb();
-        _toastMessages.addSource(_mCoins){ wrapper ->
+        _toastMessages.addSource(_loadCoinsRequest){ wrapper ->
             _toastMessages.postValue(convertToErrorResource(wrapper))}
     }
 
     private fun updateCoins() {
-        repository.loadCoins(_mCoins)
+        uploadCoins.value = Unit
     }
 
-    fun convertToErrorResource(data: ResultWrapper<PagedList<Coin>>): Int{
+    fun convertToErrorResource(data: ResultWrapper<Any>): Int{
         val status = data.status
         if (status == Status.ERROR){
           when(data.message){

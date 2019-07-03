@@ -2,6 +2,7 @@ package com.example.xmaster.data
 
 import android.content.Context
 import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import com.bumptech.glide.Glide
@@ -42,28 +43,34 @@ class RepositoryImpl constructor(val connectivityDispatcher: ConnectivityDispatc
         appDataBase.coinsDao().update(coinsWithoutPicture)
     }
 
-    override fun loadCoins(livedata: MediatorLiveData<ResultWrapper<PagedList<Coin>>>) {
-        livedata.postValue(ResultWrapper.loading(livedata.value?.data))
+    override fun loadCoins(): MutableLiveData<ResultWrapper<Unit>> {
+        val livedata = MutableLiveData<ResultWrapper<Unit>>()
+        livedata.postValue(ResultWrapper.loading(Unit))
         if (!connectivityDispatcher.hasConnection()) {
-            livedata.postValue(ResultWrapper.error(Constants.LOST_INTERNET_CONNECTION, livedata.value?.data))
-            return
-        }
-        GlobalScope.launch {
-            val result = RetrofitHelper.authService.getAll().execute()
-            if (result.isSuccessful) {
-                result.body()?.coins?.let {
-                    appDataBase.coinsDao().insert(it)
-                    loadPictures()
-                } ?: livedata.postValue(
-                    ResultWrapper.error(
-                        result.errorBody()?.string() ?: "coins==null",
-                        livedata.value?.data
-                    )
-                )
-            } else {
-                livedata.postValue(ResultWrapper.error(Constants.SERVER_PROBLEM ?: "", livedata.value?.data))
+            livedata.postValue(ResultWrapper.error(Constants.LOST_INTERNET_CONNECTION, Unit))
+        } else{
+            GlobalScope.launch {
+                loadCoinsFromNetwork(livedata)
             }
         }
+        return livedata;
+    }
 
+    suspend fun loadCoinsFromNetwork(liveData: MutableLiveData<ResultWrapper<Unit>>) {
+        val result = RetrofitHelper.authService.getAll().execute()
+        if (result.isSuccessful) {
+            result.body()?.coins?.let {
+                appDataBase.coinsDao().insert(it)
+                liveData.postValue(ResultWrapper.success(Unit))
+                loadPictures()
+            } ?: liveData.postValue(
+                ResultWrapper.error(
+                    result.errorBody()?.string() ?: "coins==null",
+                    liveData.value?.data
+                )
+            )
+        } else {
+            liveData.postValue(ResultWrapper.error(Constants.SERVER_PROBLEM ?: "", Unit))
+        }
     }
 }

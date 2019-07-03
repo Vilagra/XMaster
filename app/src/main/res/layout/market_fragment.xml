@@ -18,7 +18,7 @@
             android:id="@+id/refresher"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            bind:refreshState="@{vm.mCoins.status}"
+            bind:refreshState="@{vm.mLoad.status}"
             bind:onRefresh="@{vm.mOnRefreshListener}"
     >
 
