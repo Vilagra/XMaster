@@ -17,6 +17,8 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
@@ -81,9 +83,11 @@ class RepositoryImpl constructor(
                     loadPictures()
                 }
             } catch (e: BadResponceException) {
-                ResultWrapper.error(
-                    e.errorMessage ?: "coins==null",
-                    liveData.value?.data
+                liveData.postValue(
+                    ResultWrapper.error(
+                        e.errorMessage ?: "coins==null",
+                        liveData.value?.data
+                    )
                 )
             }
         }
@@ -102,6 +106,25 @@ suspend fun <T> Call<T>.suspendExecute(): T {
         } else {
             continuation.resumeWithException(BadResponceException(null))
         }
+    }
+}
+
+
+suspend fun <T> Call<T>.suspendEnqueue(): T {
+    return suspendCoroutine { continuation ->
+        enqueue(object : Callback<T> {
+            override fun onResponse(call: Call<T>, response: Response<T>) {
+                response.body()?.let { continuation.resume(it) } ?: continuation.resumeWithException(
+                    BadResponceException(
+                        response.errorBody()?.string()
+                    )
+                )
+            }
+
+            override fun onFailure(call: Call<T>, throwable: Throwable) {
+                continuation.resumeWithException(BadResponceException(null))
+            }
+        });
     }
 }
 
