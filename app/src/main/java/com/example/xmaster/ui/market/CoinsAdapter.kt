@@ -52,7 +52,7 @@ class CoinsAdapter() :
                     .error(R.drawable.ic_broken_image)
                     .fallback(R.drawable.ic_no_image)
                     .into(itemView.picture)
-            mCoinBinding.setCoin(CoinListItemViewModel(item))
+            mCoinBinding.setCoin(item)
             mCoinBinding.executePendingBindings()
         }
     }

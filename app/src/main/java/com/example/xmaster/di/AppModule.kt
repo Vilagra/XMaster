@@ -1,5 +1,6 @@
 package com.example.xmaster.di
 
+import android.app.Application
 import android.content.Context
 import androidx.room.Room
 import com.example.xmaster.MyApplication
@@ -14,6 +15,11 @@ class AppModule {
     @Provides
     fun provideContext(application: MyApplication): Context {
         return application.applicationContext
+    }
+
+    @Provides
+    fun provideApplication(application: MyApplication): Application {
+        return application
     }
 
     @Provides

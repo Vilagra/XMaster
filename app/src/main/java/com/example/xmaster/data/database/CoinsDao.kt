@@ -25,7 +25,7 @@ abstract class CoinsDao{
                         symbol: String,
                         cmc_rank: Int,
                         price: Double,
-                        circulating_supply: Double,
+                        circulating_supply: String,
                         percent_change_24h: Double)
 
     @Update

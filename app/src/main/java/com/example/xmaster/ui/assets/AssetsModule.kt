@@ -13,10 +13,10 @@ internal abstract class AssetsModule {
 
 
     @ContributesAndroidInjector
-    internal abstract fun contributeScheduleAgendaFragment(): AssetsFragment
+    abstract fun contributeAssetsFragment(): AssetsFragment
 
     @Binds
     @IntoMap
     @ViewModelKey(AssetsViewModel::class)
-    abstract fun bindAgendaViewModel(viewModel: AssetsViewModel): ViewModel
+    abstract fun bindAssetsViewModel(viewModel: AssetsViewModel): ViewModel
 }
