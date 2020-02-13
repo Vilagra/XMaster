@@ -1,24 +1,20 @@
 package com.example.xmaster.di
 
-import android.app.Application
 import android.content.Context
 import androidx.room.Room
-import com.example.xmaster.data.RepositoryImpl
+import com.example.xmaster.MyApplication
 import com.example.xmaster.data.database.AppDataBase
-import com.example.xmaster.utils.CustomFactory
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
 
 @Module
-class AppModule(private val app: Application) {
-    @Provides
-    @Singleton
-    fun provideContext(): Context = app
+class AppModule {
 
     @Provides
-    @Singleton
-    fun provideViewModelFactory(repo: RepositoryImpl): CustomFactory = CustomFactory(repo)
+    fun provideContext(application: MyApplication): Context {
+        return application.applicationContext
+    }
 
     @Provides
     @Singleton

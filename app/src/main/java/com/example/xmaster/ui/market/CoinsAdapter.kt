@@ -1,4 +1,4 @@
-package com.example.xmaster.market
+package com.example.xmaster.ui.market
 
 
 import android.view.LayoutInflater

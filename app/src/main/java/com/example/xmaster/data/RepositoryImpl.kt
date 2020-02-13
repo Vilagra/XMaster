@@ -12,10 +12,7 @@ import com.example.xmaster.data.model.Coin
 import com.example.xmaster.data.network.ConnectivityDispatcher
 import com.example.xmaster.data.network.RetrofitHelper
 import com.example.xmaster.utils.Constants
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -128,5 +125,29 @@ suspend fun <T> Call<T>.suspendEnqueue(): T {
     }
 }
 
+fun main(args: Array<String>){
+        var start = System.currentTimeMillis()
+        MainScope().launch {
+            val asyncs = listOf(
+                async { delay(2) },
+                async { delay(2) },
+                async { sleep(1) },
+                async { sleep(2) },
+                async { sleep(3) }
+            )
+            asyncs.forEach { it.await() }
+            println(System.currentTimeMillis() - start)
+        }
+
+}
+
+suspend fun sleep(id: Int) {
+    return suspendCoroutine {
+            println(id.toString() + " " +System.currentTimeMillis())
+            Thread.sleep(2000)
+            it.resume(Unit)
+    }
+
+}
 
 class BadResponceException(val errorMessage: String?) : Exception() {}

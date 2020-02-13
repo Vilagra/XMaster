@@ -1,4 +1,4 @@
-package com.example.xmaster.market
+package com.example.xmaster.ui.market
 
 import android.content.Context
 import android.os.Bundle
@@ -6,15 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.example.xmaster.MyApplication
+import com.example.xmaster.ViewModelFactory
 import com.example.xmaster.databinding.MarketFragmentBinding
-import com.example.xmaster.utils.CustomFactory
+import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
-class MarketFragment : Fragment() {
+class MarketFragment : DaggerFragment() {
 
     lateinit var binding: MarketFragmentBinding
 
@@ -26,12 +25,11 @@ class MarketFragment : Fragment() {
 
 
     @Inject
-    lateinit var factory: CustomFactory
+    lateinit var factory: ViewModelFactory
 
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        (activity?.application as MyApplication).component.inject(this)
         mMarketViewModel = ViewModelProviders.of(this, factory).get(MarketViewModel::class.java)
 
     }
@@ -43,7 +41,7 @@ class MarketFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        binding.setVm(mMarketViewModel)
+        //binding.setVm(mMarketViewModel)
         binding.setLifecycleOwner(viewLifecycleOwner)
         mMarketViewModel?.toastMessages?.observe(viewLifecycleOwner, Observer { res ->
             if (res != null && res != -1) {

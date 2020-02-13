@@ -10,7 +10,7 @@
 
         <variable
                 name="vm"
-                type="com.example.xmaster.market.MarketViewModel"/>
+                type="com.example.xmaster.ui.news.market.MarketViewModel"/>
 
     </data>
 

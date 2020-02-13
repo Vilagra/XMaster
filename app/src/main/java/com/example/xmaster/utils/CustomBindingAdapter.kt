@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.xmaster.data.Status
 import com.example.xmaster.data.model.Coin
-import com.example.xmaster.market.CoinsAdapter
+import com.example.xmaster.ui.market.CoinsAdapter
 
 
 object CustomBindingAdapter {

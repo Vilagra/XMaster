@@ -6,7 +6,7 @@
             app:startDestination="@+id/assetsFragment">
     <fragment
             android:id="@+id/marketFragment"
-            android:name="com.example.xmaster.market.MarketFragment"
+            android:name="com.example.xmaster.ui.market.MarketFragment"
             android:label="Market Fragment"
             tools:layout="@layout/market_fragment">
         <action
@@ -18,7 +18,7 @@
 
     <fragment
             android:id="@+id/assetsFragment"
-            android:name="com.example.xmaster.assets.AssetsFragment"
+            android:name="com.example.xmaster.ui.assets.AssetsFragment"
             android:label="Assets Fragment"
             tools:layout="@layout/assets_fragment">
         <action
@@ -29,7 +29,7 @@
 
     <fragment
             android:id="@+id/newsFragment"
-            android:name="com.example.xmaster.news.NewsFragment"
+            android:name="com.example.xmaster.ui.news.NewsFragment"
             android:label="News Fragment"
             tools:layout="@layout/news_fragment">
         <action android:id="@+id/action_newsFragment_to_marketFragment" app:destination="@id/marketFragment"/>

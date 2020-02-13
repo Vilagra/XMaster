@@ -1,22 +1,16 @@
 package com.example.xmaster
 
-import android.app.Application
 import com.example.xmaster.di.AppComponent
 import com.example.xmaster.di.AppModule
 import com.example.xmaster.di.DaggerAppComponent
+import dagger.android.AndroidInjector
+import dagger.android.support.DaggerApplication
 
-class MyApplication : Application() {
+class MyApplication :  DaggerApplication(){
 
-    lateinit var component: AppComponent
-
-    override fun onCreate() {
-        super.onCreate()
-        component = initDagger(this)
+    override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
+        return DaggerAppComponent.factory().create(this)
     }
 
-    private fun initDagger(app: MyApplication): AppComponent =
-        DaggerAppComponent.builder()
-            .appModule(AppModule(app))
-            .build()
 
 }

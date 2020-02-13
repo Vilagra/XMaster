@@ -7,7 +7,9 @@ import java.text.NumberFormat
 import java.util.*
 
 object NumberConverter{
+
     fun convertDigitOnTouthandsComaSeparator(num: Number) = NumberFormat.getNumberInstance(Locale.FRANCE).format(num)
+
     fun doubleWithTwoPointAfterComaToString (double: Double): String {
         val df = DecimalFormat("#.##")
         df.roundingMode = RoundingMode.CEILING

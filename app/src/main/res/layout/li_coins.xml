@@ -6,7 +6,7 @@
 
         <variable
                 name="coin"
-                type="com.example.xmaster.market.CoinListItemViewModel"/>
+                type="com.example.xmaster.ui.news.market.CoinListItemViewModel"/>
 
     </data>
 
