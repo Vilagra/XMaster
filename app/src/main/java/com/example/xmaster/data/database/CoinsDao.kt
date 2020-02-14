@@ -11,17 +11,17 @@ import com.example.xmaster.data.model.Coin
 abstract class CoinsDao{
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    abstract fun insertCoins(coins: List<Coin>)
+    abstract suspend fun insertCoins(coins: List<Coin>)
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    abstract fun insertCoin(coin: Coin):Long
+    abstract suspend fun insertCoin(coin: Coin):Long
 
     @Query("SELECT count(*) FROM coin" )
-    abstract fun count(): Int
+    abstract suspend fun count(): Int
 
     @Query("UPDATE coin SET name=:name, symbol=:symbol, cmc_rank=:cmc_rank, price=:price, " +
             "circulating_supply=:circulating_supply, percent_change_24h=:percent_change_24h WHERE name = :name" )
-    abstract fun update(name: String,
+    abstract suspend fun update(name: String,
                         symbol: String,
                         cmc_rank: Int,
                         price: Double,
@@ -32,10 +32,10 @@ abstract class CoinsDao{
     abstract fun update(coins: List<Coin>)
 
     @Query("select * from coin order by cmc_rank")
-    abstract fun getAllCoins(): DataSource.Factory<Int, Coin>
+    abstract suspend fun getAllCoins(): DataSource.Factory<Int, Coin>
 
     @Query("select * from coin order by cmc_rank")
-    abstract fun getAllCoinsList(): List<Coin>
+    abstract suspend fun getAllCoinsList(): List<Coin>
 
     @Transaction
     open suspend fun insert(coins: List<Coin>){
