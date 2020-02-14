@@ -17,7 +17,7 @@
 package com.example.xmaster.di
 
 import androidx.lifecycle.ViewModelProvider
-import com.example.xmaster.ViewModelFactory
+import com.example.xmaster.ui.ViewModelFactory
 import dagger.Binds
 import dagger.Module
 

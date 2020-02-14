@@ -1,32 +1,21 @@
 package com.example.xmaster.ui.news
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
+import androidx.fragment.app.viewModels
 import com.example.xmaster.R
+import com.example.xmaster.databinding.NewsFragmentBinding
+import com.example.xmaster.ui.BaseFragment
+import com.example.xmaster.ui.ViewModelFactory
+import javax.inject.Inject
 
-class NewsFragment : Fragment() {
+class NewsFragment : BaseFragment<NewsFragmentBinding>() {
 
-    companion object {
-        fun newInstance() = NewsFragment()
-    }
+    override val contentLayoutId: Int
+        get() = R.layout.news_fragment
 
-    private lateinit var viewModel: NewsViewModel
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.news_fragment, container, false)
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(NewsViewModel::class.java)
-        // TODO: Use the ViewModel
+    @Inject
+    lateinit var factory: ViewModelFactory
+    private val viewModel: NewsViewModel by viewModels {
+        factory
     }
 
 }

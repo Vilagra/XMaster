@@ -1,31 +1,21 @@
 package com.example.xmaster.ui.assets
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProviders
+
+import androidx.fragment.app.viewModels
 import com.example.xmaster.R
-import dagger.android.support.DaggerFragment
+import com.example.xmaster.databinding.AssetsFragmentBinding
+import com.example.xmaster.ui.BaseFragment
+import com.example.xmaster.ui.ViewModelFactory
+import javax.inject.Inject
 
-class AssetsFragment : DaggerFragment() {
+class AssetsFragment : BaseFragment<AssetsFragmentBinding>() {
 
-    companion object {
-        fun newInstance() = AssetsFragment()
+    override val contentLayoutId: Int
+        get() = R.layout.assets_fragment
+
+    @Inject
+    lateinit var factory: ViewModelFactory
+    private val viewModel: AssetsViewModel by viewModels {
+        factory
     }
-    private lateinit var viewModel: AssetsViewModel
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.assets_fragment, container, false)
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(AssetsViewModel::class.java)
-        // TODO: Use the ViewModel
-    }
-
 }

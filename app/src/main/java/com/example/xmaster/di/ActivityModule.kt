@@ -1,6 +1,6 @@
 package com.example.xmaster.di
 
-import com.example.xmaster.MainActivity
+import com.example.xmaster.ui.MainActivity
 import com.example.xmaster.ui.assets.AssetsModule
 import com.example.xmaster.ui.market.MarketModule
 import com.example.xmaster.ui.news.NewsModule

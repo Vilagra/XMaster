@@ -1,53 +1,35 @@
 package com.example.xmaster.ui.market
 
-import android.content.Context
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
-import com.example.xmaster.ViewModelFactory
+import com.example.xmaster.R
 import com.example.xmaster.databinding.MarketFragmentBinding
-import dagger.android.support.DaggerFragment
+import com.example.xmaster.ui.BaseFragment
+import com.example.xmaster.ui.ViewModelFactory
 import javax.inject.Inject
 
-class MarketFragment : DaggerFragment() {
+class MarketFragment : BaseFragment<MarketFragmentBinding>() {
 
-    lateinit var binding: MarketFragmentBinding
-
-    companion object {
-        fun newInstance() = MarketFragment()
-    }
-
-    private var mMarketViewModel: MarketViewModel? = null
-
+    override val contentLayoutId: Int
+        get() = R.layout.market_fragment
 
     @Inject
     lateinit var factory: ViewModelFactory
+    private val mMarketViewModel: MarketViewModel by viewModels { factory }
 
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        mMarketViewModel = ViewModelProviders.of(this, factory).get(MarketViewModel::class.java)
+    override fun setupBinding() {
+        binding.setVm(mMarketViewModel)
 
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = MarketFragmentBinding.inflate(inflater, container, false)
-        return binding.getRoot()
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        //binding.setVm(mMarketViewModel)
-        binding.setLifecycleOwner(viewLifecycleOwner)
-        mMarketViewModel?.toastMessages?.observe(viewLifecycleOwner, Observer { res ->
-            if (res != null && res != -1) {
-                val message = getString(res)
-                Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+    override fun setupViewModel() {
+        mMarketViewModel.toastMessages.observe(viewLifecycleOwner, Observer { res ->
+            res?.run {
+                Toast.makeText(context, getString(this), Toast.LENGTH_LONG).show()
             }
         })
     }
+
 }

@@ -13,31 +13,16 @@ import com.example.xmaster.data.model.Coin
 import com.example.xmaster.databinding.CoinBinding
 import kotlinx.android.synthetic.main.li_coins.view.*
 
-class CoinsAdapter() :
-    PagedListAdapter<Coin, CoinsAdapter.CoinsHolder>(CALLBACK) {
+class CoinsAdapter() : PagedListAdapter<Coin, CoinsAdapter.CoinsHolder>(CoinUtil) {
 
     @NonNull
     override fun onCreateViewHolder(@NonNull parent: ViewGroup, viewType: Int): CoinsHolder {
-        val inflater = LayoutInflater.from(parent.context)
-        val binding = CoinBinding.inflate(inflater, parent, false)
+        val binding = CoinBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return CoinsHolder(binding)
     }
 
     override fun onBindViewHolder(@NonNull holder: CoinsHolder, position: Int) {
         getItem(position)?.run { holder.bind(this) }
-    }
-
-    companion object {
-
-        private val CALLBACK = object : DiffUtil.ItemCallback<Coin>() {
-            override fun areItemsTheSame(oldItem: Coin, newItem: Coin): Boolean {
-                return oldItem.name.equals(newItem.name)
-            }
-
-            override fun areContentsTheSame(oldItem: Coin, newItem: Coin): Boolean {
-                return oldItem.equals(newItem)
-            }
-        }
     }
 
     class CoinsHolder(private val mCoinBinding: CoinBinding) :
@@ -57,8 +42,15 @@ class CoinsAdapter() :
         }
     }
 
-    interface OnItemClickListener {
-
-        fun onItemClick(username: String)
-    }
 }
+
+object CoinUtil : DiffUtil.ItemCallback<Coin>() {
+        override fun areItemsTheSame(oldItem: Coin, newItem: Coin): Boolean {
+            return oldItem.name.equals(newItem.name)
+        }
+
+        override fun areContentsTheSame(oldItem: Coin, newItem: Coin): Boolean {
+            return oldItem.equals(newItem)
+        }
+    }
+

@@ -1,4 +1,4 @@
-package com.example.xmaster.utils
+package com.example.xmaster.ui.market
 
 import androidx.databinding.BindingAdapter
 import androidx.paging.PagedList
@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.xmaster.data.Status
 import com.example.xmaster.data.model.Coin
-import com.example.xmaster.ui.market.CoinsAdapter
 
 
 object CustomBindingAdapter {
@@ -19,15 +18,18 @@ object CustomBindingAdapter {
         recyclerView: RecyclerView,
         coins: PagedList<Coin>?
     ) {
-        val adapter = CoinsAdapter()
+        val adapter = recyclerView.adapter as? CoinsAdapter ?: CoinsAdapter()
         adapter.submitList(coins)
-        var manager = LinearLayoutManager(recyclerView.context)
-        recyclerView.layoutManager = manager
-        recyclerView.adapter = adapter
-        if (recyclerView.itemDecorationCount < 1) {
-            var dividerItemDecoration = DividerItemDecoration(recyclerView.getContext(), manager.orientation);
-            recyclerView.addItemDecoration(dividerItemDecoration)
+        recyclerView.run {
+            var manager = LinearLayoutManager(recyclerView.context)
+            layoutManager = manager
+            this.adapter = adapter
+            if (itemDecorationCount < 1) {
+                var dividerItemDecoration = DividerItemDecoration(getContext(), manager.orientation);
+                addItemDecoration(dividerItemDecoration)
+            }
         }
+
     }
 
     @BindingAdapter("bind:refreshState", "bind:onRefresh")
@@ -37,7 +39,10 @@ object CustomBindingAdapter {
         status: Status?,
         listener: SwipeRefreshLayout.OnRefreshListener
     ) {
-        layout.setOnRefreshListener(listener)
-        layout.post { layout.isRefreshing = status == Status.LOADING }
+        layout.run {
+            setOnRefreshListener(listener)
+            post { isRefreshing = status == Status.LOADING }
+        }
+
     }
 }
