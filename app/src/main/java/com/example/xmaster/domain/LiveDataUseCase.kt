@@ -1,4 +1,4 @@
-package com.google.samples.apps.iosched.shared.domain
+package com.example.xmaster.domain
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
@@ -8,7 +8,7 @@ import java.lang.Exception
 
 
 abstract class LiveDataUseCase<in Param, R>() {
-    
+
     operator fun invoke(parameters: Param): LiveData<Result<R>> {
         return liveData {
             try {

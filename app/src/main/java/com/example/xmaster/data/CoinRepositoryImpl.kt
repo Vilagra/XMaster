@@ -16,10 +16,10 @@ import javax.inject.Inject
 
 
 class CoinRepositoryImpl @Inject constructor(
-    val connectivityDispatcher: ConnectivityDispatcher,
-    val appDataBase: AppDataBase,
-    val context: Context,
-    val apiService: ApiService
+    private val connectivityDispatcher: ConnectivityDispatcher,
+    private val appDataBase: AppDataBase,
+    private val context: Context,
+    private val apiService: ApiService
 ) : CoinRepository {
 
 
@@ -39,7 +39,7 @@ class CoinRepositoryImpl @Inject constructor(
         }
     }
 
-    suspend fun loadCoinsFromNetwork() {
+    private suspend fun loadCoinsFromNetwork() {
         withContext(Dispatchers.IO) {
             val response = apiService.getAll()
             if (response.isSuccessful) {
@@ -51,7 +51,7 @@ class CoinRepositoryImpl @Inject constructor(
         }
     }
 
-    suspend fun loadPictures() {
+    private suspend fun loadPictures() {
         val coinsWithoutPicture =
             appDataBase.coinsDao().getAllCoinsList().filter { it.imageURL == null }
         coinsWithoutPicture.chunked(500)

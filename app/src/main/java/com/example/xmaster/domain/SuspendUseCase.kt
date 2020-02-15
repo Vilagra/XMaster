@@ -1,3 +1,5 @@
+package com.example.xmaster.domain
+
 import com.example.xmaster.utils.Result
 
 
