@@ -29,10 +29,6 @@ class NetworkModule {
         ctx.getSystemService(Context.CONNECTIVITY_SERVICE)
                 as ConnectivityManager
 
-    @Singleton
-    @Provides
-    fun provideConnectivityDispatcher(manager: ConnectivityManager) =
-        ConnectivityDispatcher(manager)
 
     @Singleton
     @Provides

@@ -1,6 +1,8 @@
 package com.example.xmaster.domain
 
+import com.example.xmaster.utils.GeneralError
 import com.example.xmaster.utils.Result
+import com.example.xmaster.utils.Unexpected
 
 
 abstract class SuspendUseCase<in Param, R>() {
@@ -11,7 +13,7 @@ abstract class SuspendUseCase<in Param, R>() {
                 Result.Success(it)
             }
         } catch (e: Exception) {
-            Result.Error(e)
+            Result.Error(e as? GeneralError ?: Unexpected())
         }
     }
 

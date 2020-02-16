@@ -1,7 +1,5 @@
 package com.example.xmaster
 
-import com.example.xmaster.di.AppComponent
-import com.example.xmaster.di.AppModule
 import com.example.xmaster.di.DaggerAppComponent
 
 import dagger.android.AndroidInjector

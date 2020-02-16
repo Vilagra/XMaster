@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.example.xmaster.data.Status
 import com.example.xmaster.data.model.Coin
 
 
@@ -36,12 +35,12 @@ object CustomBindingAdapter {
     @JvmStatic
     fun configureSwipeRefreshLayout(
         layout: SwipeRefreshLayout,
-        status: Status?,
+        isLoading: Boolean,
         listener: SwipeRefreshLayout.OnRefreshListener
     ) {
         layout.run {
             setOnRefreshListener(listener)
-            post { isRefreshing = status == Status.LOADING }
+            post { isRefreshing = isLoading }
         }
 
     }

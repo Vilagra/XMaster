@@ -1,40 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:bind="http://schemas.android.com/apk/res-auto">
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
 
     <data>
 
         <import
-                alias="V"
-                type="android.view.View"/>
+            alias="V"
+            type="android.view.View" />
 
         <variable
-                name="vm"
-                type="com.example.xmaster.ui.market.MarketViewModel"/>
+            name="vm"
+            type="com.example.xmaster.ui.market.MarketViewModel" />
 
     </data>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/refresher"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            bind:refreshState="@{vm.mLoad.status}"
-            bind:onRefresh="@{vm.mOnRefreshListener}"
-    >
+        android:id="@+id/refresher"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        bind:onRefresh="@{vm}"
+        bind:refreshState="@{vm.loading}">
 
         <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recycler"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    bind:data="@{vm.mCoins.data}"/>
+                android:id="@+id/recycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                bind:data="@{vm.coins}" />
 
             <include
-                    layout="@layout/v_error"/>
+                android:visibility="gone"
+                layout="@layout/v_error"
+                 />
 
         </LinearLayout>
 

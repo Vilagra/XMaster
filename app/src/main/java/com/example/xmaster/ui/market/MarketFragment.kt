@@ -7,6 +7,7 @@ import com.example.xmaster.R
 import com.example.xmaster.databinding.MarketFragmentBinding
 import com.example.xmaster.ui.BaseFragment
 import com.example.xmaster.ui.ViewModelFactory
+import com.example.xmaster.utils.EventObserver
 import javax.inject.Inject
 
 class MarketFragment : BaseFragment<MarketFragmentBinding>() {
@@ -21,13 +22,12 @@ class MarketFragment : BaseFragment<MarketFragmentBinding>() {
 
     override fun setupBinding() {
         binding.setVm(mMarketViewModel)
-
     }
 
     override fun setupViewModel() {
-        mMarketViewModel.toastMessages.observe(viewLifecycleOwner, Observer { res ->
+        mMarketViewModel.errorMessage.observe(viewLifecycleOwner, EventObserver { res ->
             res?.run {
-                Toast.makeText(context, getString(this), Toast.LENGTH_LONG).show()
+                Toast.makeText(context, res, Toast.LENGTH_LONG).show()
             }
         })
     }

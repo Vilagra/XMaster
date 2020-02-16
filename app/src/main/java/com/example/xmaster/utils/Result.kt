@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 sealed class Result<out R> {
 
     data class Success<out T>(val data: T) : Result<T>()
-    data class Error(val exception: Exception) : Result<Nothing>()
+    data class Error(val exception: GeneralError) : Result<Nothing>()
     object Loading : Result<Nothing>()
 
     override fun toString(): String {
@@ -30,3 +30,23 @@ inline fun <T> Result<T>.updateOnSuccess(liveData: MutableLiveData<T>) {
         liveData.value = data
     }
 }
+
+fun <T> Result<T>.isLoading(): Boolean {
+    return this is Result.Loading
+}
+
+fun <T> Result<T>.handleError(block: (error: GeneralError) -> Unit) {
+    if (this is Result.Error) block(exception)
+}
+
+fun <T> Result<T>.handleSuccess(block: (T) -> Unit) {
+    if (this is Result.Success) block(this.data)
+}
+
+sealed class GeneralError(message: String) : Exception(message)
+
+class LoadCoinsFailed(message: String = ""): GeneralError(message)
+
+class LoadPicturesFailed(message: String = ""): GeneralError(message)
+
+class Unexpected(message: String = "") : GeneralError(message)
