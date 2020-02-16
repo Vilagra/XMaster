@@ -32,7 +32,7 @@ abstract class CoinsDao{
     abstract fun update(coins: List<Coin>)
 
     @Query("select * from coin order by cmc_rank")
-    abstract suspend fun getAllCoins(): DataSource.Factory<Int, Coin>
+    abstract fun getAllCoins(): DataSource.Factory<Integer, Coin>
 
     @Query("select * from coin order by cmc_rank")
     abstract suspend fun getAllCoinsList(): List<Coin>
