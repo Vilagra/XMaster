@@ -9,7 +9,6 @@ import com.example.xmaster.data.model.ImageDeserializer
 import com.example.xmaster.data.model.ImagesResponse
 import com.example.xmaster.data.network.ApiService
 import com.example.xmaster.data.network.BASE_URL
-import com.example.xmaster.data.network.ConnectivityDispatcher
 import com.example.xmaster.data.network.KEY
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -44,7 +43,7 @@ class NetworkModule {
     private fun createClient() = OkHttpClient.Builder().apply {
         if (BuildConfig.DEBUG) {
             val logging = HttpLoggingInterceptor()
-            logging.level = HttpLoggingInterceptor.Level.BODY
+            logging.level = HttpLoggingInterceptor.Level.HEADERS
             addInterceptor(logging)
         }
         addInterceptor(Interceptor {

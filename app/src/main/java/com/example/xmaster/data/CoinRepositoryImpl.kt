@@ -41,7 +41,7 @@ class CoinRepositoryImpl @Inject constructor(
 
     private suspend fun loadCoinsFromNetwork() {
         withContext(Dispatchers.IO) {
-            val response = apiService.getAll()
+            val response = apiService.getAllCoins()
             if (response.isSuccessful) {
                 response.body()?.coins?.let {
                     appDataBase.coinsDao().insert(it)
@@ -62,13 +62,14 @@ class CoinRepositoryImpl @Inject constructor(
                 if (response.isSuccessful) {
                     response.body()?.images?.forEach { images ->
                         coinsWithoutPicture.find { coin ->
-                            coin.id.toInt() === images.id.toInt()
-                        }?.imageURL = images.logo;
+                            coin.id == images.id
+                        }?.imageURL = images.logo
                         Glide.with(context)
                             .load(images.logo)
-                            .preload(500, 500)
+                            .preload(64, 64)
                     }
                 }
             }
+        appDataBase.coinsDao().update(coinsWithoutPicture)
     }
 }

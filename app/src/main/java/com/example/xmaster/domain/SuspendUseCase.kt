@@ -13,6 +13,7 @@ abstract class SuspendUseCase<in Param, R>() {
                 Result.Success(it)
             }
         } catch (e: Exception) {
+            e.printStackTrace()
             Result.Error(e as? GeneralError ?: Unexpected())
         }
     }

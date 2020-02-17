@@ -27,36 +27,43 @@ class CoinDeserializer : JsonDeserializer<Coin> {
         json: JsonElement?,
         typeOfT: Type?,
         context: JsonDeserializationContext?
-    ): Coin {
-        val jsonObject = json?.asJsonObject
-        val id = jsonObject?.getAsJsonPrimitive("id")?.asLong ?: 0
-        val name = jsonObject?.getAsJsonPrimitive("name")?.asString ?: ""
-        val symbol = jsonObject?.getAsJsonPrimitive("symbol")?.asString ?: ""
-        val cmc_rank = jsonObject?.getAsJsonPrimitive("cmc_rank")?.asInt ?: -1
-        val price = NumberConverter.doubleWithThreePointAfterComa(
-            jsonObject?.getAsJsonObject("quote")?.getAsJsonObject("USD")?.getAsJsonPrimitive("price")?.asDouble
-                ?: 0.0
-        )
-        val circulating_supply =
-            NumberConverter.convertDigitOnTouthandsComaSeparator(jsonObject?.get("circulating_supply")?.let { if (it.isJsonNull) 0.0 else it?.asDouble }
-                ?: 0.0)
-        val percent_change_24h = NumberConverter.doubleWithTwoPointAfterComa(
-            jsonObject?.getAsJsonObject("quote")?.getAsJsonObject("USD")?.get("percent_change_24h")?.asDouble
-                ?: 0.0
-        )
-        val market_cap = NumberConverter.convertDigitOnTouthandsComaSeparator(
-            jsonObject?.getAsJsonObject("quote")?.getAsJsonObject("USD")?.get("market_cap")?.let { if (it.isJsonNull) 0.0 else it?.asDouble }
-                ?: 0.0)
-        return Coin(
-            id,
-            name,
-            symbol,
-            cmc_rank,
-            price,
-            circulating_supply,
-            percent_change_24h,
-            market_cap
-        )
+    ): Coin? { 
+         return json?.asJsonObject?.run {
+            val id = getAsJsonPrimitive("id")?.asLong ?: 0
+            val name = getAsJsonPrimitive("name")?.asString ?: ""
+            val symbol = getAsJsonPrimitive("symbol")?.asString ?: ""
+            val cmc_rank = getAsJsonPrimitive("cmc_rank")?.asInt ?: -1
+            val circulating_supply =
+                NumberConverter.convertDigitOnTouthandsComaSeparator(get("circulating_supply")?.let { if (it.isJsonNull) 0.0 else it?.asDouble }
+                    ?: 0.0)
+            getAsJsonObject("quote")?.getAsJsonObject("USD")?.let { usd ->
+                val price = NumberConverter.doubleWithThreePointAfterComa(
+                    usd.getAsJsonPrimitive("price")?.asDouble
+                        ?: 0.0
+                )
+
+                val percent_change_24h = NumberConverter.doubleWithTwoPointAfterComa(
+                    usd.get("percent_change_24h")?.asDouble
+                        ?: 0.0
+                )
+                val market_cap = NumberConverter.convertDigitOnTouthandsComaSeparator(
+                    usd.get("market_cap")?.let { if (it.isJsonNull) 0.0 else it?.asDouble }
+                        ?: 0.0)
+                return Coin(
+                    id,
+                    name,
+                    symbol,
+                    cmc_rank,
+                    price,
+                    circulating_supply,
+                    percent_change_24h,
+                    market_cap
+                )
+            }
+        } ?: null
+
+
+
     }
 
 }

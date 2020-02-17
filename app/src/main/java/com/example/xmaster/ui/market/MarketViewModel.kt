@@ -35,7 +35,7 @@ class MarketViewModel @Inject constructor(
 
     init {
         val coinsResult = getCoinsUseCase(Unit)
-        this._coins.addSource(coinsResult){
+        _coins.addSource(coinsResult){
             it.handleSuccess {
                 this._coins.value = it
             }
