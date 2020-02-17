@@ -41,7 +41,7 @@ class CoinRepositoryImpl @Inject constructor(
 
     private suspend fun loadCoinsFromNetwork() {
         withContext(Dispatchers.IO) {
-            val response = apiService.getAll()
+            val response = apiService.getAllCoins()
             if (response.isSuccessful) {
                 response.body()?.coins?.let {
                     appDataBase.coinsDao().insert(it)
