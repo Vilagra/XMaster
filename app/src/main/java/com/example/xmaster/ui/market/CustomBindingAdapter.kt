@@ -17,17 +17,21 @@ object CustomBindingAdapter {
         recyclerView: RecyclerView,
         coins: PagedList<Coin>?
     ) {
-        val adapter = recyclerView.adapter as? CoinsAdapter ?: CoinsAdapter()
-        adapter.submitList(coins)
         recyclerView.run {
-            var manager = LinearLayoutManager(recyclerView.context)
-            layoutManager = manager
-            this.adapter = adapter
-            if (itemDecorationCount < 1) {
-                var dividerItemDecoration = DividerItemDecoration(getContext(), manager.orientation);
-                addItemDecoration(dividerItemDecoration)
+            adapter ?: run {
+                var manager = LinearLayoutManager(recyclerView.context)
+                layoutManager = manager
+                adapter = CoinsAdapter()
+                if (itemDecorationCount < 1) {
+                    var dividerItemDecoration =
+                        DividerItemDecoration(getContext(), manager.orientation);
+                    addItemDecoration(dividerItemDecoration)
+                }
             }
+            (adapter as? CoinsAdapter)?.submitList(coins)
         }
+        
+
 
     }
 

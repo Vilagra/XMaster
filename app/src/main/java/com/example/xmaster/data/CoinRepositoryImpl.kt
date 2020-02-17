@@ -1,7 +1,6 @@
 package com.example.xmaster.data
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import androidx.paging.LivePagedListBuilder
