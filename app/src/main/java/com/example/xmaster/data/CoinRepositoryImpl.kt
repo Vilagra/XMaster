@@ -1,6 +1,7 @@
 package com.example.xmaster.data
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import androidx.paging.LivePagedListBuilder
@@ -62,13 +63,14 @@ class CoinRepositoryImpl @Inject constructor(
                 if (response.isSuccessful) {
                     response.body()?.images?.forEach { images ->
                         coinsWithoutPicture.find { coin ->
-                            coin.id.toInt() === images.id.toInt()
-                        }?.imageURL = images.logo;
+                            coin.id == images.id
+                        }?.imageURL = images.logo
                         Glide.with(context)
                             .load(images.logo)
-                            .preload(500, 500)
+                            .preload(64, 64)
                     }
                 }
             }
+        appDataBase.coinsDao().update(coinsWithoutPicture)
     }
 }
