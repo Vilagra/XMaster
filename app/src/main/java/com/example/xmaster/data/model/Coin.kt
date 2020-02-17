@@ -27,7 +27,7 @@ class CoinDeserializer : JsonDeserializer<Coin> {
         json: JsonElement?,
         typeOfT: Type?,
         context: JsonDeserializationContext?
-    ): Coin? { 
+    ): Coin? {
          return json?.asJsonObject?.run {
             val id = getAsJsonPrimitive("id")?.asLong ?: 0
             val name = getAsJsonPrimitive("name")?.asString ?: ""

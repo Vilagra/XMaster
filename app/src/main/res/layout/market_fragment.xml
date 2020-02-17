@@ -5,7 +5,6 @@
     <data>
 
         <import
-            alias="V"
             type="android.view.View" />
 
         <variable
@@ -33,7 +32,7 @@
                 bind:data="@{vm.coins}" />
 
             <include
-                android:visibility="gone"
+                android:visibility="@{vm.isErrorHappen ? View.VISIBLE : View.GONE}"
                 layout="@layout/v_error"
                  />
 
