@@ -1,6 +1,5 @@
 package com.example.xmaster.data.model
 
-import android.util.Log
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.xmaster.utils.NumberConverter
@@ -50,7 +49,6 @@ class CoinDeserializer : JsonDeserializer<Coin> {
                 val market_cap = NumberConverter.convertDigitOnTouthandsComaSeparator(
                     usd.get("market_cap")?.let { if (it.isJsonNull) 0.0 else it?.asDouble }
                         ?: 0.0)
-                Log.d("valera", "sss")
                 return Coin(
                     id,
                     name,
