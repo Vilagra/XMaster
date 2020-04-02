@@ -5,8 +5,7 @@
 
     <data>
 
-        <import
-            type="android.view.View" />
+        <import type="android.view.View" />
 
 
     </data>
@@ -19,23 +18,33 @@
             android:id="@+id/facebook_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            bind:layout_constraintBottom_toTopOf="@+id/button2"
+            bind:layout_constraintBottom_toTopOf="@+id/google_button"
             bind:layout_constraintEnd_toEndOf="parent"
             bind:layout_constraintStart_toStartOf="parent"
             bind:layout_constraintTop_toTopOf="parent"
             bind:layout_constraintVertical_bias="0.7"
             bind:layout_constraintVertical_chainStyle="packed" />
 
-        <Button
-            android:id="@+id/button2"
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/google_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            tools:text="button"
             bind:layout_constraintBottom_toTopOf="@+id/button3"
             bind:layout_constraintEnd_toEndOf="parent"
             bind:layout_constraintStart_toStartOf="parent"
-            bind:layout_constraintTop_toBottomOf="@+id/facebook_button" />
+            bind:layout_constraintTop_toBottomOf="@+id/facebook_button"
+            tools:text="button" />
+
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            bind:layout_constraintBottom_toTopOf="@+id/button4"
+            bind:layout_constraintEnd_toEndOf="parent"
+            bind:layout_constraintStart_toStartOf="parent"
+            bind:layout_constraintTop_toBottomOf="@id/google_button" />
 
         <Button
             android:id="@+id/button4"
@@ -54,20 +63,9 @@
             android:layout_marginTop="16dp"
             bind:layout_constraintBottom_toBottomOf="parent"
             bind:layout_constraintEnd_toEndOf="parent"
-            bind:layout_constraintHorizontal_bias="0.498"
             bind:layout_constraintStart_toStartOf="parent"
             bind:layout_constraintTop_toBottomOf="@+id/button4" />
 
-        <Button
-            android:id="@+id/button3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            bind:layout_constraintBottom_toTopOf="@+id/button4"
-            bind:layout_constraintEnd_toEndOf="parent"
-            bind:layout_constraintHorizontal_bias="0.498"
-            bind:layout_constraintStart_toStartOf="parent"
-            bind:layout_constraintTop_toBottomOf="@+id/button2" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
