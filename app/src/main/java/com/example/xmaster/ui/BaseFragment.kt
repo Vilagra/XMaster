@@ -28,7 +28,7 @@ abstract class BaseFragment<B : ViewDataBinding> : DaggerFragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        setHasOptionsMenu(true)
+        //setHasOptionsMenu(true)
         setupViewModel()
     }
 

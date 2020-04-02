@@ -2,6 +2,7 @@ package com.example.xmaster.data
 
 import android.content.Context
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.asFlow
 import androidx.lifecycle.liveData
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
@@ -32,11 +33,7 @@ class CoinRepositoryImpl @Inject constructor(
     }
 
     override suspend fun loadCoins() {
-        if (!connectivityDispatcher.hasConnection()) {
-
-        } else {
-            loadCoinsFromNetwork()
-        }
+        if (connectivityDispatcher.hasConnection()) loadCoinsFromNetwork()
     }
 
     private suspend fun loadCoinsFromNetwork() {
