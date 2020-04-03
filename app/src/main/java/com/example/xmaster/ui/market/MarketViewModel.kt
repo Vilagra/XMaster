@@ -9,15 +9,16 @@ import com.example.xmaster.domain.coin.GetCoinsUseCase
 import com.example.xmaster.domain.coin.LoadCoinsUseCase
 import com.example.xmaster.utils.*
 import com.example.xmaster.utils.map
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
+import java.lang.Exception
+import java.lang.NullPointerException
 import javax.inject.Inject
 
 class MarketViewModel @Inject constructor(
-    app: Application,
     getCoinsUseCase: GetCoinsUseCase,
     private val loadCoinsUseCase: LoadCoinsUseCase,
     private val errorHandler: ErrorHandler
-) : AndroidViewModel(app), SwipeRefreshLayout.OnRefreshListener {
+) : ViewModel(), SwipeRefreshLayout.OnRefreshListener {
 
     private val _coins = MediatorLiveData<PagedList<Coin>>()
     val coins: LiveData<PagedList<Coin>>
@@ -35,29 +36,28 @@ class MarketViewModel @Inject constructor(
 
     init {
         val coinsResult = getCoinsUseCase(Unit)
-        _coins.addSource(coinsResult){
-            it.handleSuccess {
+        _coins.addSource(coinsResult) {
+            it.handleResult(blockSuccess = {
                 this._coins.value = it
-            }
+            })
         }
         isErrorHappen = coinsResult.map {
             (it is Result.Error && _coins.value.isNullOrEmpty())
                     || (it is Result.Success && it.data.isNullOrEmpty())
         }
         viewModelScope.launch {
-            loadCoinsUseCase(Unit).handleError {
+            loadCoinsUseCase(Unit).handleResult(blockError =  {
                 _errorMessage.value = Event(errorHandler.convertError(it))
-            }
+            })
         }
     }
-
 
     override fun onRefresh() {
         viewModelScope.launch {
             _loading.value = true
-            loadCoinsUseCase(Unit).handleError {
+            loadCoinsUseCase(Unit).handleResult(blockError = {
                 _errorMessage.value = Event(errorHandler.convertError(it))
-            }
+            })
             _loading.value = false
         }
     }

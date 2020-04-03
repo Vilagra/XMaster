@@ -25,28 +25,13 @@ val <T> Result<T>.data: T?
     get() = (this as? Result.Success)?.data
 
 
-inline fun <T> Result<T>.updateOnSuccess(liveData: MutableLiveData<T>) {
-    if (this is Result.Success) {
-        liveData.value = data
+fun <T> Result<T>.handleResult(
+    blockSuccess: (T) -> Unit = {},
+    blockError: (error: GeneralError) -> Unit = {}
+){
+    when(this){
+        is Result.Success -> blockSuccess(data)
+        is Result.Error -> blockError(exception)
     }
 }
 
-fun <T> Result<T>.isLoading(): Boolean {
-    return this is Result.Loading
-}
-
-fun <T> Result<T>.handleError(block: (error: GeneralError) -> Unit) {
-    if (this is Result.Error) block(exception)
-}
-
-fun <T> Result<T>.handleSuccess(block: (T) -> Unit) {
-    if (this is Result.Success) block(this.data)
-}
-
-sealed class GeneralError(message: String) : Exception(message)
-
-class LoadCoinsFailed(message: String = ""): GeneralError(message)
-
-class LoadPicturesFailed(message: String = ""): GeneralError(message)
-
-class Unexpected(message: String = "") : GeneralError(message)

@@ -9,7 +9,7 @@ import com.example.xmaster.utils.map
 import java.lang.Exception
 
 
-abstract class LiveDataUseCase<in Param, R>() {
+abstract class LiveDataUseCase<in Param, R> {
 
     operator fun invoke(parameters: Param): LiveData<Result<R>> {
         return liveData {
