@@ -10,6 +10,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.xmaster.data.model.Coin
 import com.example.xmaster.domain.coin.GetCoinsUseCase
 import com.example.xmaster.domain.coin.LoadCoinsUseCase
+import com.example.xmaster.ui.BaseViewModel
 import com.example.xmaster.utils.ErrorHandler
 import com.example.xmaster.utils.Event
 import com.example.xmaster.utils.UseCaseResult
@@ -24,22 +25,13 @@ import javax.inject.Inject
 class MarketViewModel @Inject constructor(
     getCoinsUseCase: GetCoinsUseCase,
     private val loadCoinsUseCase: LoadCoinsUseCase
-) : ViewModel(), SwipeRefreshLayout.OnRefreshListener {
+) : BaseViewModel(), SwipeRefreshLayout.OnRefreshListener {
 
     private val _coins = MediatorLiveData<PagedList<Coin>>()
-    val coins: LiveData<PagedList<Coin>>
-        get() = _coins
+    val coins: LiveData<PagedList<Coin>> = _coins
 
     private val _isDataAvailable = MutableLiveData<Boolean>()
     val isDataAvailable: LiveData<Boolean> = _isDataAvailable
-
-    private val _loading = MutableLiveData<Boolean>()
-    val loading: LiveData<Boolean>
-        get() = _loading
-
-    private val _errorMessage = MutableLiveData<Event<Int>>()
-    val errorMessage: LiveData<Event<Int>>
-        get() = _errorMessage
 
     init {
         val coinsResult = getCoinsUseCase(Unit)
@@ -70,7 +62,8 @@ class MarketViewModel @Inject constructor(
                     handleError = {
                     _errorMessage.value = Event(it.mapToStringResource())
                 },
-                    handleLoading = { _loading.value = it })
+                    handleLoading = { _loading.value = it }
+                )
             }
         }
     }
