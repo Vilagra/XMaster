@@ -15,9 +15,12 @@ import com.example.xmaster.utils.UseCaseResult
 import com.example.xmaster.utils.Unexpected
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -29,6 +32,7 @@ class CoinRepositoryImpl @Inject constructor(
     private val apiService: ApiService
 ) : CoinRepository {
 
+    var i: Int = 1
 
     @ExperimentalCoroutinesApi
     override fun getAllCoinsFromDb(): Flow<PagedList<Coin>> {
@@ -53,7 +57,9 @@ class CoinRepositoryImpl @Inject constructor(
             if (response.isSuccessful) {
                 response.body()?.coins?.let {
                     appDataBase.coinsDao().insert(it)
-                    loadPictures()
+                    launch {
+                        loadPictures()
+                    }
                     return@withContext UseCaseResult.Success(Unit)
                 }
             }

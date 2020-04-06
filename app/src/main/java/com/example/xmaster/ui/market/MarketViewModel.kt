@@ -18,6 +18,7 @@ import com.example.xmaster.utils.UseCaseResult
 import com.example.xmaster.utils.handleResult
 import com.example.xmaster.utils.mapToStringResource
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -39,6 +40,8 @@ class MarketViewModel @Inject constructor(
     private val _isDataAvailable = MutableLiveData<Boolean>()
     val isDataAvailable: LiveData<Boolean> = _isDataAvailable
 
+    var perviousLoadingJob: Job
+
     init {
         val coinsResult = getCoinsUseCase(Unit)
         viewModelScope.launch {
@@ -52,7 +55,7 @@ class MarketViewModel @Inject constructor(
             }
 
         }
-        viewModelScope.launch {
+        perviousLoadingJob = viewModelScope.launch {
             loadCoinsUseCase(Unit).collect {
                 it.handleResult(handleError = {
                     errorableImpl.setError(it.mapToStringResource())
@@ -62,7 +65,8 @@ class MarketViewModel @Inject constructor(
     }
 
     override fun onRefresh() {
-        viewModelScope.launch {
+        perviousLoadingJob.cancel()
+        perviousLoadingJob = viewModelScope.launch {
             loadCoinsUseCase(Unit).collect {
                 it.handleResult(
                     handleError = {
