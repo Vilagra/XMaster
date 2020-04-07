@@ -9,4 +9,6 @@
     <string name="unexpected">Sorry something went wrong</string>
     <string name="facebook_app_id" translatable="false">2637156506394308</string>
     <string name="fb_login_protocol_scheme" translatable="false">fb2637156506394308</string>
+    <string name="sign_up_button">sign up</string>
+    <string name="log_in_button">log in</string>
 </resources>

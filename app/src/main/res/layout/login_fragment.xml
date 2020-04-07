@@ -21,8 +21,10 @@
 
         <com.facebook.login.widget.LoginButton
             android:id="@+id/facebook_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_marginEnd="@dimen/button_start_end_padding"
+            android:layout_marginStart="@dimen/button_start_end_padding"
             bind:layout_constraintBottom_toTopOf="@+id/google_button"
             bind:layout_constraintEnd_toEndOf="parent"
             bind:layout_constraintStart_toStartOf="parent"
@@ -32,9 +34,12 @@
 
         <com.google.android.gms.common.SignInButton
             android:id="@+id/google_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
             android:layout_marginTop="16dp"
+            android:layout_marginEnd="@dimen/button_start_end_padding"
+            android:layout_marginStart="@dimen/button_start_end_padding"
+            android:gravity="center"
             bind:layout_constraintBottom_toTopOf="@+id/button3"
             bind:layout_constraintEnd_toEndOf="parent"
             bind:layout_constraintStart_toStartOf="parent"
@@ -43,8 +48,12 @@
 
         <Button
             android:id="@+id/button3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_marginEnd="@dimen/button_start_end_padding"
+            android:layout_marginStart="@dimen/button_start_end_padding"
+            android:gravity="center"
+            android:text="@string/log_in_button"
             android:layout_marginTop="16dp"
             bind:layout_constraintBottom_toTopOf="@+id/button4"
             bind:layout_constraintEnd_toEndOf="parent"
@@ -53,8 +62,12 @@
 
         <Button
             android:id="@+id/button4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_marginEnd="@dimen/button_start_end_padding"
+            android:layout_marginStart="@dimen/button_start_end_padding"
+            android:gravity="center"
+            android:text="@string/sign_up_button"
             android:layout_marginTop="16dp"
             bind:layout_constraintBottom_toBottomOf="parent"
             bind:layout_constraintEnd_toEndOf="parent"
