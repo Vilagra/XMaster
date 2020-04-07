@@ -4,7 +4,9 @@
     <string name="market">Market</string>
     <string name="news">news</string>
     <string name="error">wait_data_loading</string>
-    <string name="lost_internet">internet is unavailable</string>
-    <string name="server_problem">server trouble</string>
-    <string name="unexpected">Sorry,something went wrong</string>
+    <string name="lost_internet" translatable="false">internet is off</string>
+    <string name="server_problem" translatable="false">server trouble</string>
+    <string name="unexpected">Sorry something went wrong</string>
+    <string name="facebook_app_id" translatable="false">2637156506394308</string>
+    <string name="fb_login_protocol_scheme" translatable="false">fb2637156506394308</string>
 </resources>

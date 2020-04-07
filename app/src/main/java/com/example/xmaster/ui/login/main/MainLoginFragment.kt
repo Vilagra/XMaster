@@ -1,6 +1,7 @@
 package com.example.xmaster.ui.login.main
 
 import android.content.Intent
+import android.net.Uri
 import android.util.Log
 import com.example.xmaster.R
 import com.example.xmaster.databinding.LoginFragmentBinding
@@ -30,6 +31,14 @@ class MainLoginFragment : BaseFragment<LoginFragmentBinding>() {
     override fun setupBinding() {
         configureFacebookLoginButton()
         configureGoogleLogin()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val uri: Uri =
+            Uri.parse("android.resource://" + requireContext().getPackageName().toString() + "/" + R.raw.video)
+        binding.videoWiew.setVideoURI(uri)
+        binding.videoWiew.start()
     }
 
     private fun configureFacebookLoginButton(){
