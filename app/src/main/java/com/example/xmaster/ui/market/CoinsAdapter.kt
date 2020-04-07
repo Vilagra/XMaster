@@ -29,7 +29,7 @@ class CoinsAdapter() : PagedListAdapter<Coin, CoinsAdapter.CoinsHolder>(CoinUtil
         RecyclerView.ViewHolder(mCoinBinding.getRoot()) {
 
         fun bind(item: Coin) {
-            val url = item.imageURL?.apply { "$this?w360" } ?: null
+            val url = item.imageURL
             Glide.with(itemView)
                     .load(url)
                     .centerCrop()

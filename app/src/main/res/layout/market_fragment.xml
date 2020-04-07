@@ -32,7 +32,7 @@
                 bind:data="@{vm.coins}" />
 
             <include
-                android:visibility="@{vm.isErrorHappen ? View.VISIBLE : View.GONE}"
+                android:visibility="@{vm.isDataAvailable ? View.VISIBLE : View.GONE}"
                 layout="@layout/v_error"
                  />
 
