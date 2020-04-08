@@ -3,9 +3,13 @@ package com.example.xmaster.ui.login.main
 import android.content.Intent
 import android.net.Uri
 import android.util.Log
+import androidx.fragment.app.viewModels
 import com.example.xmaster.R
 import com.example.xmaster.databinding.LoginFragmentBinding
 import com.example.xmaster.ui.BaseFragment
+import com.example.xmaster.ui.MainActivity
+import com.example.xmaster.ui.ViewModelFactory
+import com.example.xmaster.utils.EventObserver
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
@@ -16,11 +20,18 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
+import javax.inject.Inject
 
 
 private const val RC_SIGN_IN = 1
 
 class MainLoginFragment : BaseFragment<LoginFragmentBinding>() {
+
+    @Inject
+    private lateinit var viewModelFactory: ViewModelFactory
+    private val viewModel : MainLoginViewModel by viewModels {
+        viewModelFactory
+    }
 
     val callbackManager = CallbackManager.Factory.create()
     lateinit var mGoogleSignInClient: GoogleSignInClient
@@ -39,6 +50,16 @@ class MainLoginFragment : BaseFragment<LoginFragmentBinding>() {
             Uri.parse("android.resource://" + requireContext().getPackageName().toString() + "/" + R.raw.video)
         binding.videoWiew.setVideoURI(uri)
         binding.videoWiew.start()
+    }
+
+    override fun setupViewModel() {
+        viewModel.destination.observe(viewLifecycleOwner, EventObserver{
+            when(it){
+                is SignIn -> Unit
+                is SignUp -> Unit
+                MainScreen -> startActivity(Intent(MainActivity::class))
+            }
+        })
     }
 
     private fun configureFacebookLoginButton(){

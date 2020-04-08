@@ -5,12 +5,12 @@ import androidx.lifecycle.MutableLiveData
 import com.example.xmaster.utils.Event
 import javax.inject.Inject
 
-interface Navigationable<DESTINATION: Navigation> {
+interface Navigationable<DESTINATION: Destination> {
 
     val destination: LiveData<Event<DESTINATION>>
 }
 
-class NavigationableImpl<DESTINATION: Navigation> @Inject constructor() : Navigationable<DESTINATION>{
+class NavigationableImpl<DESTINATION: Destination> @Inject constructor() : Navigationable<DESTINATION>{
 
     private val _destination = MutableLiveData<Event<DESTINATION>>()
     override val destination: LiveData<Event<DESTINATION>> = _destination

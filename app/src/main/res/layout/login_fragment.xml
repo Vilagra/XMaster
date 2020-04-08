@@ -48,6 +48,7 @@
 
         <Button
             android:id="@+id/button3"
+            style="@style/login_button"
             android:layout_width="0dp"
             android:layout_height="56dp"
             android:layout_marginEnd="@dimen/button_start_end_padding"
@@ -62,6 +63,7 @@
 
         <Button
             android:id="@+id/button4"
+            style="@style/login_button"
             android:layout_width="0dp"
             android:layout_height="56dp"
             android:layout_marginEnd="@dimen/button_start_end_padding"

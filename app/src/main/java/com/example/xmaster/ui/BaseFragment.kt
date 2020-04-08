@@ -18,7 +18,6 @@ abstract class BaseFragment<B : ViewDataBinding> : DaggerFragment() {
 
     protected open fun setupViewModel() {}
 
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         binding = DataBindingUtil.inflate(inflater, contentLayoutId, container, false)

@@ -9,4 +9,8 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="login_button" parent="Base.Widget.AppCompat.Button">
+        <item name="android:background">@color/white</item>
+    </style>
+
 </resources>

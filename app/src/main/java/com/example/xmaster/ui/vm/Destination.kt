@@ -1,4 +1,3 @@
 package com.example.xmaster.ui.vm
 
-interface Navigation {
-}
+interface Destination
